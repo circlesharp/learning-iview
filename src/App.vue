@@ -12,6 +12,7 @@
     <Button to="/layout/basic" type="primary" ghost>LayoutBasic</Button>
     <Button to="/layout/layout-1" type="primary" ghost>Layout-1</Button>
     <Button to="/layout/layout-2" type="primary" ghost>Layout-2</Button>
+    <Button to="/layout/layout-3" type="primary" ghost>Layout-3</Button>
   </ButtonGroup>
   <router-view></router-view>
 </div>
