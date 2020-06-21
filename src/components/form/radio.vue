@@ -95,9 +95,9 @@ export default {
     }
   },
   methods: {
-    handleRadioGroupChange() {
+    handleRadioGroupChange(rst) {
       // 通过修改外部的数据改变时不会触发
-      console.log('handleRadioGroupChange ->', this.phone)
+      console.log('handleRadioGroupChange ->', this.phone, rst)
     }
   }
 }

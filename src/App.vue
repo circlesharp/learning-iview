@@ -10,7 +10,7 @@
         @on-collapse="siderCollapsed"
         v-model="isCollapsed"
       >
-        <Menu active-name="3-2" theme="dark" width="auto" :class="menuitemClasses">
+        <Menu active-name="3-3" theme="dark" width="auto" :class="menuitemClasses">
           <Submenu name="1">
             <template slot="title">
               <Icon type="ios-navigate"></Icon>
@@ -37,6 +37,7 @@
             </template>
             <MenuItem name="3-1" to="/form/input">Input</MenuItem>
             <MenuItem name="3-2" to="/form/radio">Radio</MenuItem>
+            <MenuItem name="3-3" to="/form/checkbox">Checkbox</MenuItem>
           </Submenu>
         </Menu>
       </Sider>

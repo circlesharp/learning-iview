@@ -8,6 +8,7 @@ import Layout_2 from './components/layout/layout-2'
 import Layout_3 from './components/layout/layout-3'
 import Input from './components/form/input'
 import Radio from './components/form/radio'
+import Checkbox from './components/form/checkbox'
 
 const routes = [
   { path: '/' },
@@ -20,6 +21,7 @@ const routes = [
   { path: '/layout/layout-3', component: Layout_3 },
   { path: '/form/input', component: Input },
   { path: '/form/radio', component: Radio },
+  { path: '/form/checkbox', component: Checkbox },
 ]
 
 const router = new VueRouter({
