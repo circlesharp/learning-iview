@@ -76,8 +76,8 @@ export default {
   },
   methods: {
     collapsedSider() {
-      // this.$refs.side1.toggleCollapse()
-      this.isCollapsed = !this.isCollapsed
+      this.$refs.side1.toggleCollapse()
+      // this.isCollapsed = !this.isCollapsed
     },
     siderCollapsed() {
       console.log('siderCollapsed')
