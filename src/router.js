@@ -6,6 +6,8 @@ import LayoutBasic from './components/layout/basic'
 import Layout_1 from './components/layout/layout-1'
 import Layout_2 from './components/layout/layout-2'
 import Layout_3 from './components/layout/layout-3'
+import Input from './components/form/input'
+import Radio from './components/form/radio'
 
 const routes = [
   { path: '/' },
@@ -16,7 +18,8 @@ const routes = [
   { path: '/layout/layout-1', component: Layout_1 },
   { path: '/layout/layout-2', component: Layout_2 },
   { path: '/layout/layout-3', component: Layout_3 },
-  { path: '/form/input', component: Layout_3 },
+  { path: '/form/input', component: Input },
+  { path: '/form/radio', component: Radio },
 ]
 
 const router = new VueRouter({
