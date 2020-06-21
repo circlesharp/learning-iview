@@ -14,7 +14,6 @@ Vue.use(VueRouter)
 
 Vue.use(ViewUI, {
   transfer: true,
-  size: 'large',
   capture: false,
   select: {
     arrow: 'md-arrow-dropdown',
