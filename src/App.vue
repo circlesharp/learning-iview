@@ -40,6 +40,13 @@
             <MenuItem name="3-3" to="/form/checkbox">Checkbox</MenuItem>
             <MenuItem name="3-4" to="/form/switch">Switch</MenuItem>
           </Submenu>
+          <Submenu name="4">
+            <template slot="title">
+              <Icon type="logo-apple"></Icon>
+              <span>others</span>
+            </template>
+            <MenuItem name="4-1" to="/others/modal">Modal</MenuItem>
+          </Submenu>
         </Menu>
       </Sider>
 

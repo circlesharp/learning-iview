@@ -13,7 +13,7 @@ export default {
     }
   },
 }
-</script>script>  
+</script>
 
 <style lang="less" scoped>
 
