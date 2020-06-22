@@ -11,6 +11,7 @@ import Radio from './components/form/radio'
 import Checkbox from './components/form/checkbox'
 import Switch from './components/form/switch'
 import Modal from './components/others/modal'
+import Table from './components/others/table'
 
 const routes = [
   { path: '/' },
@@ -26,6 +27,7 @@ const routes = [
   { path: '/form/checkbox', component: Checkbox },
   { path: '/form/switch', component: Switch },
   { path: '/others/modal', component: Modal },
+  { path: '/others/table', component: Table },
 ]
 
 const router = new VueRouter({
