@@ -8,8 +8,6 @@ import { router } from './router'
 import 'view-design/dist/styles/iview.css'
 // import './index.less'
 
-Vue.config.productionTip = 
-
 Vue.use(VueRouter)
 
 Vue.use(ViewUI, {
@@ -25,3 +23,5 @@ new Vue({
   render: h => h(App),
   router,
 }).$mount('#app')
+
+export { Vue }

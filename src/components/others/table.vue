@@ -43,8 +43,8 @@
 
     <!--  -->
     <article>
-      <h4>基础用法</h4>
-      <i-table :data="data1" :columns="columns1" />
+      <h4>树形数据</h4>
+      <i-table :data="data11" :columns="columns11" row-key="id" border />
     </article>
 
     <!--  -->
@@ -137,35 +137,116 @@ export default {
           key: "name",
           render: (h, { row }) =>
             h("div", [
-              h("Icon", { props: { type: "logo-windows" }, style: { marginRight: '10px' } }),
-              h('strong', row.name)
+              h("Icon", {
+                props: { type: "logo-windows" },
+                style: { marginRight: "10px" }
+              }),
+              h("strong", row.name)
             ])
         },
         {
-          title: 'Age',
-          key: 'age'
+          title: "Age",
+          key: "age"
         },
         {
-          title: 'Address',
-          key: 'address'
+          title: "Address",
+          key: "address"
         },
         {
-          title: 'Action',
-          key: 'action',
+          title: "Action",
+          key: "action",
           width: 150,
-          align: 'center',
-          render: (h, { index }) => h('div', [
-            h('Button', {
-              props: { type: 'primary', size: 'small' },
-              style: { marginRight: '5px' },
-              on: { click: () => { this.show(index) }}
-            }, 'View'),
-            h('Button', {
-              props: { type: 'error', size: 'small' },
-              on: { click: () => { this.remove(index) }}
-            }, 'Delete')
-          ])
+          align: "center",
+          render: (h, { index }) =>
+            h("div", [
+              h(
+                "Button",
+                {
+                  props: { type: "primary", size: "small" },
+                  style: { marginRight: "5px" },
+                  on: {
+                    click: () => {
+                      this.show(index);
+                    }
+                  }
+                },
+                "View"
+              ),
+              h(
+                "Button",
+                {
+                  props: { type: "error", size: "small" },
+                  on: {
+                    click: () => {
+                      this.remove(index);
+                    }
+                  }
+                },
+                "Delete"
+              )
+            ])
         }
+      ],
+      data11: [
+        // 树形结构要指定 row-key
+        {
+          id: "100",
+          name: "John Brown",
+          age: 18,
+          address: "New York No. 1 Lake Park"
+        },
+        {
+          id: "101",
+          name: "Jim Green",
+          age: 24,
+          address: "London No. 1 Lake Park",
+          _showChildren: true,
+          children: [
+            {
+              id: "10100",
+              name: "John Brown",
+              age: 18,
+              address: "New York No. 1 Lake Park"
+            },
+            {
+              id: "10101",
+              name: "Joe Blackn",
+              age: 18,
+              address: "New York No. 2 Lake Park"
+            },
+            {
+              id: "10102",
+              name: "Jon Snow",
+              age: 16,
+              address: "New York No. 3 Lake Park",
+              children: [
+                {
+                  id: "1010200",
+                  name: "John Brown",
+                  age: 18,
+                  address: "New York No. 1 Lake Park"
+                },
+                {
+                  id: "1010201",
+                  name: "Joe Blackn",
+                  age: 18,
+                  address: "New York No. 2 Lake Park"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          id: "103",
+          name: "Jon Snow",
+          age: 26,
+          address: "nanzhuang"
+        }
+      ],
+      columns11: [
+        { title: "Name", key: "name", tree: true },
+        { title: "Age", key: "age" },
+        { title: "Address", key: "address" }
       ]
     };
   },
@@ -182,11 +263,11 @@ export default {
       this.$Modal.info({
         title: `User Info (index: ${index})`,
         content: `<strong>Name：</strong>${this.data1[index].name}<br>Age：${this.data1[index].age}<br>Address：${this.data1[index].address}`
-      })
+      });
     },
     remove(index) {
-      this.data1.splice(index, 1)
-    },
+      this.data1.splice(index, 1);
+    }
   }
 };
 </script>

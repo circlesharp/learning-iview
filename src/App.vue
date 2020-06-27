@@ -10,7 +10,7 @@
         @on-collapse="siderCollapsed"
         v-model="isCollapsed"
       >
-        <Menu active-name="4-2" theme="dark" width="auto" :class="menuitemClasses">
+        <Menu active-name="4-4" theme="dark" width="auto" :class="menuitemClasses">
           <Submenu name="1">
             <template slot="title">
               <Icon type="ios-navigate"></Icon>
@@ -47,6 +47,8 @@
             </template>
             <MenuItem name="4-1" to="/others/modal">Modal</MenuItem>
             <MenuItem name="4-2" to="/others/table">Table</MenuItem>
+            <MenuItem name="4-3" to="/others/table2">Table2</MenuItem>
+            <MenuItem name="4-4" to="/others/select">Select</MenuItem>
           </Submenu>
         </Menu>
       </Sider>

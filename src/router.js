@@ -12,6 +12,8 @@ import Checkbox from './components/form/checkbox'
 import Switch from './components/form/switch'
 import Modal from './components/others/modal'
 import Table from './components/others/table'
+import Table2 from './components/others/table2'
+import Select from './components/others/select'
 
 const routes = [
   { path: '/' },
@@ -28,6 +30,8 @@ const routes = [
   { path: '/form/switch', component: Switch },
   { path: '/others/modal', component: Modal },
   { path: '/others/table', component: Table },
+  { path: '/others/table2', component: Table2 },
+  { path: '/others/select', component: Select },
 ]
 
 const router = new VueRouter({
