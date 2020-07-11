@@ -31,19 +31,19 @@
 
 <script>
 const listData = [
-  { name: 'Tom1', age: 1, country: 'China' },
-  { name: 'Tom2', age: 2, country: 'China' },
-  { name: 'Tom3', age: 3, country: 'China' },
-  { name: 'Tom4', age: 4, country: 'China' },
-  { name: 'Tom5', age: 5, country: 'China' },
-  { name: 'Tom6', age: 6, country: 'China' },
-  { name: 'Tom7', age: 7, country: 'China' },
-  { name: 'Tom8', age: 8, country: 'China' },
-  { name: 'Tom9', age: 9, country: 'China' },
-  { name: 'Tom10', age: 10, country: 'China' },
-  { name: 'Tom11', age: 11, country: 'China' },
-  { name: 'Tom12', age: 12, country: 'China' },
-  { name: 'Tom13', age: 13, country: 'China' },
+  { name: 'Tom1', id: 1, country: 'China' },
+  { name: 'Tom2', id: 2, country: 'China' },
+  { name: 'Tom3', id: 3, country: 'China' },
+  { name: 'Tom4', id: 4, country: 'China' },
+  { name: 'Tom5', id: 5, country: 'China' },
+  { name: 'Tom6', id: 6, country: 'China' },
+  { name: 'Tom7', id: 7, country: 'China' },
+  { name: 'Tom8', id: 8, country: 'China' },
+  { name: 'Tom9', id: 9, country: 'China' },
+  { name: 'Tom10', id: 10, country: 'China' },
+  { name: 'Tom11', id: 11, country: 'China' },
+  { name: 'Tom12', id: 12, country: 'China' },
+  { name: 'Tom13', id: 13, country: 'China' },
 ]
 
 export default {
@@ -56,8 +56,8 @@ export default {
         unshiftArr: [],
         deleteArr: [],
         columns: [
+          { title: 'Id', key: 'id' },
           { title: 'Name', key: 'name' },
-          { title: 'Age', key: 'age' },
           { title: 'Country', key: 'country' },
           {
             title: 'Option',
@@ -81,6 +81,7 @@ export default {
         current: 1,
         size: 4,
       },
+      fakeId: 60,
     }
   },
   created() {
@@ -93,16 +94,17 @@ export default {
       this.refreshDisplay()
     },
     addRow(row) {
-      row = { name: 'TomAdd', age: 66, country: 'China' }
+      row = { name: 'TomAdd', id: this.fakeId++, country: 'China' }
       this.table.unshiftArr.unshift(row)
       this.table.dataTotal.unshift(row)
       this.refreshDisplay()
     },
     deleteRow(row, index) {
       const deleteItem = this.table.dataTotal.splice(index, 1)
+      console.log(deleteItem[0].id)
       this.table.deleteArr.push(deleteItem[0])
       this.refreshDisplay()
-      this.$Message.success(`You have deleted NO. ${index}: ${ row.name }!`)
+      this.$Message.success(`You have deleted NO. ${row.id}: ${ row.name }!`)
     },
     refreshDisplay() {
       if (this.table.dataTotal) {
@@ -129,8 +131,8 @@ export default {
         add: this.table.unshiftArr,
         del: this.table.deleteArr,
       }
-      console.log(`现在要提交的内容有: `)
-      console.log(submitData)
+      console.log('submit add: ', submitData.add.map(i => i.id))
+      console.log('submit del: ', submitData.del.reduce((rst, i) => (rst + ' ' + i.id)))
     },
   },
 }
