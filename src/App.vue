@@ -50,6 +50,13 @@
             <MenuItem name="4-3" to="/others/table2">Table2</MenuItem>
             <MenuItem name="4-4" to="/others/select">Select</MenuItem>
           </Submenu>
+          <Submenu name="5">
+            <template slot="title">
+              <Icon type="logo-apple"></Icon>
+              <span>union</span>
+            </template>
+            <MenuItem name="5-1" to="/union/page">Page</MenuItem>
+          </Submenu>
         </Menu>
       </Sider>
 
