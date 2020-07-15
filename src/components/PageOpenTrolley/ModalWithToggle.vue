@@ -78,7 +78,6 @@ const modalCols = [
 
 export default {
   name: 'ModalWithToggle',
-  inheritAttrs: false,
   components: { TableWithPage },
   props: {
     show: { type: Boolean, default: false },
@@ -91,7 +90,7 @@ export default {
   data() {
     return {
       modalShow: false,
-      IDs: [],
+      // IDs: this.blackListID,
       value: '',
       elpsy: [],
       list: [],
@@ -112,18 +111,15 @@ export default {
     getColumn() {
       return modalCols;
     },
+    IDs() {
+      return Array.from(this.blackListID);
+    },
   },
   watch: {
     show(v) { // 显示 Modal 变启动搜索
       this.modalShow = v;
       if (v) {
         this.searchExecute();
-      }
-    },
-    blackListID: {
-      immediate: true,
-      handler(v) {
-        this.IDs = v;
       }
     },
   },
