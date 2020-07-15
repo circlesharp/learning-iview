@@ -15,6 +15,7 @@ import Table from './components/others/table'
 import Table2 from './components/others/table2'
 import Select from './components/others/select'
 import Page from './components/union/page'
+import openTrolley from './components/PageOpenTrolley/PageOpenTrolley.vue'
 
 const routes = [
   { path: '/' },
@@ -34,6 +35,7 @@ const routes = [
   { path: '/others/table2', component: Table2 },
   { path: '/others/select', component: Select },
   { path: '/union/page', component: Page },
+  { path: '/union/trolley', component: openTrolley },
 ]
 
 const router = new VueRouter({

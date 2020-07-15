@@ -11,6 +11,10 @@
       <Table :data="table.dataShow"
             :columns="table.columns">
         <div slot="header" style="display: flex; justify-content: flex-end; align-item: center">
+          <Button type="error"
+                  @click="mogai">
+            mogai
+          </Button>
           <Button type="primary"
                   @click="addRow">
             Add
@@ -19,6 +23,7 @@
         <div slot="footer" style="display: flex; justify-content: flex-end; align-item: center">
           <Page show-sizer
                 :total="page.total"
+                :current="2"
                 :page-size="page.size"
                 :page-size-opts="[4, 8, 12]"
                 @on-change="pageChange"
@@ -82,6 +87,7 @@ export default {
         size: 4,
       },
       fakeId: 60,
+      reRender: true,
     }
   },
   created() {
@@ -89,6 +95,11 @@ export default {
     this.refreshDisplay()
   },
   methods: {
+    mogai() {
+      // this.page.current = 1;
+      this.reRender = false;
+      this.reRender = true;
+    },
     getTableData() {
       this.table.dataTotal = listData
       this.refreshDisplay()
