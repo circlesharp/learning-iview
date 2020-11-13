@@ -1,8 +1,15 @@
-import Vue from 'vue'
-import App from './App.vue'
+import Vue from 'vue';
+import iView from 'iview';
 
-Vue.config.productionTip = false
+import 'iview/dist/styles/iview.css';
+
+import App from './App.vue';
+import router from '@/router';
+
+Vue.use(iView);
+Vue.config.productionTip = false;
 
 new Vue({
   render: h => h(App),
-}).$mount('#app')
+  router,
+}).$mount('#app');
