@@ -1,70 +1,65 @@
 <template>
   <div>
-    <i-form ref="formInline" :model="formInline" :rules="ruleInline" inline>
-      <FormItem prop="user">
-        <i-input type="text" v-model="formInline.user" placeholder="Username">
-          <Icon type="ios-person-outline" slot="prepend"></Icon>
-        </i-input>
-      </FormItem>
-      <FormItem prop="password">
-        <i-input
-          type="password"
-          v-model="formInline.password"
-          placeholder="Password"
-        >
-          <Icon type="ios-lock-outline" slot="prepend"></Icon>
-        </i-input>
-      </FormItem>
-      <FormItem>
-        <Button type="primary" @click="handleSubmit('formInline')">
-          Signin
-        </Button>
-      </FormItem>
-    </i-form>
+    <div class="wrap-step">
+      <Steps :current="current">
+        <Step title="验证账号"></Step>
+        <Step title="发送验证码"></Step>
+        <Step title="修改密码"></Step>
+        <Step title="完成"></Step>
+      </Steps>
+    </div>
+    <div class="wrap-content">
+      <Page1 v-if="current === 0" @on-next="onNext" />
+      <Page2 v-if="current === 1" :account="account" @on-next="onNext" />
+      <Page3 v-if="current === 2" @on-next="onNext" />
+      <Page4 v-if="current === 3" @on-navigate-back="onNavigateBack" />
+    </div>
   </div>
 </template>
+
 <script>
+import Page1 from './components/page1';
+import Page2 from './components/page2';
+import Page3 from './components/page3';
+import Page4 from './components/page4';
+
 export default {
+  components: { Page1, Page2, Page3, Page4 },
   data() {
     return {
-      formInline: {
-        user: '',
-        password: '',
-      },
-      ruleInline: {
-        user: [
-          {
-            required: true,
-            message: 'Please fill in the user name',
-            trigger: 'blur',
-          },
-        ],
-        password: [
-          {
-            required: true,
-            message: 'Please fill in the password.',
-            trigger: 'blur',
-          },
-          {
-            type: 'string',
-            min: 6,
-            message: 'The password length cannot be less than 6 bits',
-            trigger: 'blur',
-          },
-        ],
-      },
+      current: 0,
+      account: '',
     };
   },
   methods: {
-    handleSubmit(name) {
-      this.$refs[name].validate(valid => {
-        if (valid) {
-          this.$Message.success('Success!');
-        } else {
-          this.$Message.error('Fail!');
-        }
-      });
+    onNext(step, msg) {
+      switch (step) {
+        case 0:
+          this.account = msg.account;
+          this.current += 1;
+          return;
+        default:
+          this.current += 1;
+      }
+    },
+    onNavigateBack() {
+      console.log('onNavigateBack');
     },
   },
 };
 </script>
+
+<style lang="less" scoped>
+.wrap-step {
+  width: 80%;
+  padding-left: 20%;
+  margin-bottom: 40px;
+}
+.wrap-content {
+  /deep/ .wrap-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+</style>
