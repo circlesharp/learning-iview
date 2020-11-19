@@ -17,7 +17,7 @@
 export default {
   props: {
     steps: {
-      type: Object,
+      type: Array,
       default() {
         return ['验证账号', '发送验证码', '修改密码', '完成'];
       },
@@ -30,17 +30,17 @@ export default {
   methods: {
     onClassHead(idx) {
       if (idx < this.current) return 'actived';
-      if (idx === this.current) return 'activing';
-      if (idx > this.current) return 'unactived';
+      else if (idx === this.current) return 'activing';
+      return 'unactived';
     },
     onClassRear(idx) {
       if (idx < this.current) return 'actived';
-      else return 'unactived';
+      return 'unactived';
     },
     onClassDesc(idx) {
       if (idx < this.current) return 'actived';
-      if (idx === this.current) return 'activing';
-      if (idx > this.current) return 'unactived';
+      else if (idx === this.current) return 'activing';
+      return 'unactived';
     },
   }
 };
@@ -54,6 +54,9 @@ export default {
 @rear-unactived: skyblue;
 @desc-active: black;
 @desc-unactived: grey;
+
+@yp-yellow: #f4b32e;
+@yp-grey: #e6e6e6;
 
 .wrap-steps {
   padding-bottom: 20px;

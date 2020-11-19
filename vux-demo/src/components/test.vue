@@ -1,14 +1,16 @@
 <template>
   <div class="test">
-    <Step :current="3"/>
+    <Step :current="2"/>
+    <XInput />
   </div>
 </template>
 
 <script>
 import Step from './step';
+import XInput from './myXInput';
 
 export default {
-  components: {Step},
+  components: { Step, XInput },
 };
 </script>
 
