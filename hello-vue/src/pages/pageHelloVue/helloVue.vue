@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <img alt="Vue logo" src="../../assets/image/logo.png" />
+    <img alt="Vue logo" src="../../assets/image/avatar-christina.jpeg" />
     <h1>{{ msg }}</h1>
     <p>
       For a guide and recipes on how to configure / customize this project,
@@ -35,6 +35,9 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  img {
+    border-radius: 50%;
+  }
   h1 {
     padding: 15px;
     color: skyblue;

@@ -3,6 +3,7 @@ import Router from 'vue-router';
 
 import HelloVue from '@/pages/pageHelloVue/helloVue';
 import ForgetPwd from '@/pages/pageForgetPwd/forgetPwd';
+import Test01 from '@/pages/pageTest01/Test';
 
 Vue.use(Router);
 
@@ -26,6 +27,12 @@ const routes = [
     path: '/forgetPwd',
     name: 'forgetPwd',
     component: ForgetPwd,
+  },
+  {
+    title: 'test01',
+    path: '/test01',
+    name: 'test01',
+    component: Test01,
   },
   {
     path: '*',
