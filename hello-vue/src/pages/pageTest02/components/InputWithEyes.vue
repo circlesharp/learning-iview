@@ -2,10 +2,11 @@
   <div>
     <div class="wrap-input">
       <Input
-        v-model="value"
+        :value="value"
         placeholder="Enter something..."
         style="width: 300px"
         :type="typeInput"
+        @on-change="onChange"
       />
       <Icon :type="iconType" @click="toggleShowPwd" />
     </div>
@@ -14,9 +15,11 @@
 
 <script>
 export default {
+  props: {
+    value: String,
+  },
   data() {
     return {
-      value: '',
       showPwd: false,
     };
   },
@@ -33,6 +36,9 @@ export default {
   methods: {
     toggleShowPwd() {
       this.showPwd = !this.showPwd;
+    },
+    onChange(e) {
+      this.$emit('input', e.target.value);
     },
   },
 };
