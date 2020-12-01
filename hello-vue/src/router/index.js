@@ -5,6 +5,7 @@ import HelloVue from '@/pages/pageHelloVue/helloVue';
 import ForgetPwd from '@/pages/pageForgetPwd/forgetPwd';
 import Test01 from '@/pages/pageTest01/Test01';
 import Test02 from '@/pages/pageTest02/Test02';
+import Test03 from '@/pages/pageTest03/Test03';
 
 Vue.use(Router);
 
@@ -40,6 +41,12 @@ const routes = [
     path: '/test02',
     name: 'test02',
     component: Test02,
+  },
+  {
+    title: 'test03',
+    path: '/test03',
+    name: 'test03',
+    component: Test03,
   },
   {
     path: '*',
