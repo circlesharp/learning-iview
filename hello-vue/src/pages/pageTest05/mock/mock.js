@@ -1,3 +1,5 @@
+import utils from '@/utils';
+
 const res01 = {
   total: 30,
   per_page: 10,
@@ -18445,4 +18447,6 @@ const resArr = [res01, res02, res03];
 
 const getRes = page => resArr[page];
 
-export default getRes;
+const wrapGetRes = utils.delayWrapper(getRes);
+
+export default wrapGetRes;

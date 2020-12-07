@@ -30,8 +30,8 @@ export default {
     this.getList();
   },
   methods: {
-    getList() {
-      const res = getRes(this.page);
+    async getList() {
+      const res = await getRes(this.page);
       if (!res) {
         this.loadingText = '没有了';
         return;
