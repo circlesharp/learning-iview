@@ -73,6 +73,7 @@ const routes = [
   {
     path: '/test06/:id',
     component: Test06,
+    name: 'test06',
     children: [
       {
         path: '',

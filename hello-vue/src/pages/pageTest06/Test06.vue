@@ -14,6 +14,7 @@
 
     <div class="warp-btn">
       <Button @click="onGo">go</Button>
+      <Button @click="onGoBack">goBack</Button>
     </div>
   </div>
 </template>
@@ -48,7 +49,33 @@ export default {
       console.log('this.$route', this.$route);
       console.log('this.$router', this.$router); // this.$router 就是 router
     },
-    onGo() {},
+    onGo() {
+      this.pushUsingName();
+      // this.pushUsingPath();
+    },
+    onGoBack() {
+      this.$router.go(-1);
+    },
+    pushUsingName() {
+      this.$router.push({
+        name: 'test06',
+        params: {
+          id: 'circlesharp',
+        },
+        query: {
+          q: 'q',
+        },
+      });
+    },
+    pushUsingPath() {
+      /* 如果提供了 path, params 会被忽略（query 不会） */
+      this.$router.push({
+        path: '/test05?q=path',
+        query: {
+          p: 'never',
+        },
+      });
+    },
   },
 };
 </script>
