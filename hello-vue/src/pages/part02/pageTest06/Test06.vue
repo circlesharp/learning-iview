@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import TestScroll from '../pageTest05/Test05';
+import TestScroll from '@/pages/part01/pageTest05/Test05';
 
 export default {
   components: { TestScroll },
