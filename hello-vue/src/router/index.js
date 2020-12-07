@@ -15,6 +15,7 @@ import Test06CompDef from '@/pages/pageTest06/components/compDefault';
 import Test06Comp01 from '@/pages/pageTest06/components/comp01';
 import Test06Comp02 from '@/pages/pageTest06/components/comp02';
 import Test06Comp03 from '@/pages/pageTest06/components/comp03';
+import Test07 from '@/pages/pageTest07/Test07';
 
 Vue.use(Router);
 
@@ -100,6 +101,12 @@ const routes = [
     path: '/test06*', // 匹配 /test06 开头的
     name: 'test06',
     component: Test06,
+  },
+  {
+    title: 'test07',
+    path: '/test07',
+    name: 'test07',
+    component: Test07,
   },
   {
     path: '*',
