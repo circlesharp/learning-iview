@@ -3,6 +3,10 @@ import Test06CompDef from '@/pages/part02/pageTest06/components/compDefault';
 import Test06Comp01 from '@/pages/part02/pageTest06/components/comp01';
 import Test06Comp02 from '@/pages/part02/pageTest06/components/comp02';
 import Test06Comp03 from '@/pages/part02/pageTest06/components/comp03';
+import Test08 from '@/pages/part02/pageTest08/Test08';
+import Test08Comp01 from '@/pages/part02/pageTest08/components/comp01';
+import Test08Comp02 from '@/pages/part02/pageTest08/components/comp02';
+import Test08Comp03 from '@/pages/part02/pageTest08/components/comp03';
 
 const part02 = [
   {
@@ -40,6 +44,15 @@ const part02 = [
     path: '/part02/test06*', // 匹配 /test06 开头的
     name: 'test06',
     component: Test06,
+  },
+  {
+    path: '/part02/test08',
+    name: 'test08',
+    components: {
+      header: Test08Comp01,
+      sidebar: Test08Comp02,
+      content: Test08Comp03,
+    },
   },
 ];
 
