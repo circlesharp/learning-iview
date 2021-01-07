@@ -9,11 +9,12 @@ import ForgetPwd from '@/pages/pageForgetPwd/forgetPwd';
 import part01 from './modules/part01';
 import part02 from './modules/part02';
 import part03 from './modules/part03';
+import memberCardManagement from './modules/memberCardManagement';
 
 Vue.use(Router);
 
 /* 2. 定义路由（routes） */
-const parts = [...part01, ...part02, ...part03];
+const parts = [...part01, ...part02, ...part03, ...memberCardManagement];
 
 const routes = [
   {
