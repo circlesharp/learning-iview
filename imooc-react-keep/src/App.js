@@ -14,6 +14,7 @@ const items = [
       id: '1',
       name: '旅行',
       type: 'outcome',
+      iconName: 'ios-plane',
     }
   },
   {
@@ -25,6 +26,7 @@ const items = [
       id: '1',
       name: '旅行',
       type: 'outcome',
+      iconName: 'ios-plane',
     }
   },
 ];
@@ -36,7 +38,6 @@ class App extends React.Component {
         <PriceList
           items={items}
           onModifyItem={item => {alert(item.id)}}
-          onDeleteItem={item => {alert(item.id)}}
         />
       </div>
     );

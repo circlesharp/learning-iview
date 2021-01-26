@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import Ionicon from 'react-ionicons';
 
 const PriceList = ({ items, onModifyItem, onDeleteItem }) => {
   return (
@@ -9,8 +11,14 @@ const PriceList = ({ items, onModifyItem, onDeleteItem }) => {
             className="list-group-item d-flex justify-content-between align-items-center"
             key={item.id}
           >
-            <span className="col-1 badge bg-primary">
-              {item.category.name}
+            <span className="col-1 badge">
+              <Ionicon
+                className="rounded-circle"
+                fontSize="30px"
+                color="#fff"
+                icon={item.category.iconName}
+                style={{ backgroundColor: '#007bff', padding: '5px' }}
+              />
             </span>
             <span className="col-5">
               {item.title}
@@ -21,19 +29,49 @@ const PriceList = ({ items, onModifyItem, onDeleteItem }) => {
             </span>
             <span className="col-2">{item.date}</span>
 
-            <button
-              className="col-1 btn btn-primary"
+            <span
+              className="col-1"
               onClick={() => {onModifyItem(item)}}
-            >编辑</button>
-            <button
-              className="col-1 btn btn-danger"
+            >
+              <Ionicon
+                className="rounded-circle"
+                fontSize="30px"
+                color="#fff"
+                icon="ios-create-outline"
+                style={{ backgroundColor: '#28a745', padding: '5px' }}
+              />
+            </span>
+            <span
+              className="col-1"
               onClick={() => {onDeleteItem(item)}}
-              >删除</button>
+            >
+              <Ionicon
+                className="rounded-circle"
+                fontSize="30px"
+                color="#fff"
+                icon="ios-close"
+                style={{ backgroundColor: '#dc3545', padding: '5px' }}
+              />
+            </span>
           </li>
         ))
       }
     </ul>
   );
+};
+
+/* 使用 PropTypes 进行 props 检查 */
+/* https://reactjs.org/docs/typechecking-with-proptypes.html#gatsby-focus-wrapper */
+PriceList.propTypes = {
+  items: PropTypes.array.isRequired,
+  onModifyItem: PropTypes.func.isRequired,
+  onDeleteItem: PropTypes.func.isRequired,
+};
+
+/* default props */
+/* 与 vue 有点不一样，默认和必填不冲突 */
+PriceList.defaultProps = {
+  onDeleteItem: item => {console.error(item)},
 };
 
 export default PriceList;
