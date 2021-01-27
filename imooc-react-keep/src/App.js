@@ -3,6 +3,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
 import PriceList from './components/PriceList';
+import ViewTab from './components/ViewTab';
+import MonthPicker from './components/MonthPicker';
+
+import { LIST_VIEW, CHART_VIEW } from './utility';
 
 const items = [
   {
@@ -38,6 +42,15 @@ class App extends React.Component {
         <PriceList
           items={items}
           onModifyItem={item => {alert(item.id)}}
+        />
+        <ViewTab
+          activeTab={LIST_VIEW}
+          onTabChange={() => {}}
+        />
+        <MonthPicker
+          year={2021}
+          month={1}
+          onChange={(y, m) => {console.log(y, m)}}
         />
       </div>
     );
