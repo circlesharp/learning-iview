@@ -6,7 +6,7 @@ class MonthPicker extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isOpen: true,
+      isOpen: false,
       selectedYear: this.props.year,
       selectedMonth: this.props.month,
     };
