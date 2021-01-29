@@ -30,7 +30,7 @@ const PriceList = ({ items, onModifyItem, onDeleteItem }) => {
             <span className="col-2">{item.date}</span>
 
             <span
-              className="col-1"
+              className="icon-modify col-1"
               onClick={() => {onModifyItem(item)}}
             >
               <Ionicon
@@ -42,7 +42,7 @@ const PriceList = ({ items, onModifyItem, onDeleteItem }) => {
               />
             </span>
             <span
-              className="col-1"
+              className="icon-delete col-1"
               onClick={() => {onDeleteItem(item)}}
             >
               <Ionicon

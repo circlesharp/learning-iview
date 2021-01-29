@@ -3,9 +3,9 @@ import Ionicon from 'react-ionicons';
 
 const CreateBtn = ({onCreateBtnClick}) => {
   return (
-    <div class="d-grid">
+    <div className="d-grid">
       <button
-        class="btn btn-primary"
+        className="btn btn-primary"
         type="button"
         onClick={() => {onCreateBtnClick()}}
       >

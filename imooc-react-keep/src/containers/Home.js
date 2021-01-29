@@ -8,7 +8,7 @@ import CreateBtn from '../components/CreateBtn';
 
 import { LIST_VIEW, CHART_VIEW, TYPE_INCOME, TYPE_OUTCOME, parseToYearAndMonth, padLeft } from '../utility';
 
-const categories = {
+export const categories = {
   '1': {
     id: '1',
     name: '旅行',
@@ -23,7 +23,7 @@ const categories = {
   },
 };
 
-const items = [
+export const items = [
   {
     id: '1',
     title: '去云南旅游',
