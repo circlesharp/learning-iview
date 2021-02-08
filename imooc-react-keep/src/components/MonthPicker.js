@@ -12,6 +12,20 @@ class MonthPicker extends React.Component {
     };
   }
 
+  componentDidMount() {
+    document.addEventListener('click', this.handleClick, false);
+  }
+  componentWillUnmount() {
+    document.removeEventListener('click', this.handleClick, false);
+  }
+
+  handleClick = event => {
+    if (this.node.contains(event.target))
+      return;
+
+    this.setState({ isOpen: false });
+  }
+
   toggleDropdown = event => {
     event.preventDefault();
     this.setState({
@@ -42,7 +56,7 @@ class MonthPicker extends React.Component {
     const yearRange = range(9, -4).map(i => i + +year);
 
     return (
-      <div className="dropdown month-picker-component">
+      <div className="dropdown month-picker-component" ref={ref => { this.node = ref }}>
         <h4>选择月份</h4>
         <button
           className="btn btn-large btn-secondary dropdown-toggle"

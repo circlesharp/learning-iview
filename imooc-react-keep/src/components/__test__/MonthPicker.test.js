@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { mount } from 'enzyme';
 import MonthPicker from '../MonthPicker';
 
@@ -93,4 +94,28 @@ describe('test MonthPicker component', () => {
     /* onChange 函数带参数调用 */
     expect(props.onChange).toHaveBeenCalledWith(2018, 1);
   });
+
+  /* 7 模拟 document 点击事件 */
+  it('模拟 document 点击事件', () => {
+    /* 改写 addEventListener (拦截) */
+    const eventMap = {};
+    document.addEventListener = jest.fn((event, cb) => {
+      eventMap[event] = cb;
+    });
+
+    const wrapper = mount(<MonthPicker {...props} />);
+    wrapper.find('.dropdown-toggle').simulate('click');
+    expect(wrapper.state('isOpen')).toEqual(true);
+    expect(wrapper.find('.dropdown-menu').length).toEqual(1);
+
+    /* 测试点击下拉菜单 */
+    eventMap.click({
+      target: ReactDOM.findDOMNode(wrapper.instance()),
+    });
+    expect(wrapper.state('isOpen')).toEqual(true);
+
+    /* 测试点击 document */
+    eventMap.click({ event: document });
+    expect(wrapper.state('isOpen')).toEqual(false);
+  })
 });
