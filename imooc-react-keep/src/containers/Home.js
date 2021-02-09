@@ -15,7 +15,7 @@ export const categories = {
     type: 'outcome',
     iconName: 'ios-plane',
   },
-  '2':  {
+  '2': {
     id: '2',
     name: '工资',
     type: 'income',
@@ -45,55 +45,62 @@ export const items = [
     date: '2021-01-26',
     cid: '1',
   },
+  {
+    id: '4',
+    title: '去梧村旅游',
+    price: 1100,
+    date: '2021-02-09',
+    cid: '1',
+  },
 ];
 
-const newItem = {
+export const newItem = {
   id: '4',
   title: 'new title',
   price: 10,
   date: '2021-01-26',
   cid: '2',
-}
+};
 
 class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       items,
-      currentDate: parseToYearAndMonth(),
+      currentDate: parseToYearAndMonth('2021-01-26'),
       tabView: LIST_VIEW,
     };
   }
 
   changeView = view => {
     this.setState({ tabView: view });
-  }
+  };
   changeDate = (year, month) => {
     this.setState({
       currentDate: { year, month },
     });
-  }
+  };
   modifyItem = modifiedItem => {
     const modifiedItems = this.state.items.map(item => {
       if (item.id === modifiedItem.id)
-        return {...item, title: 'modified title'};
+        return { ...item, title: 'modified title' };
       return item;
     });
     this.setState({
       items: modifiedItems,
     });
-  }
+  };
   createItem = () => {
     this.setState({
       items: [newItem, ...this.state.items],
     });
-  }
+  };
   deleteItem = deletedItem => {
     const deletedItems = this.state.items.filter(item => item.id !== deletedItem.id);
     this.setState({
       items: deletedItems,
     });
-  }
+  };
 
   render() {
     const { items, currentDate, tabView } = this.state;
@@ -139,7 +146,7 @@ class Home extends React.Component {
             activeTab={tabView}
             onTabChange={this.changeView}
           />
-          <CreateBtn onCreateBtnClick={this.createItem}/>
+          <CreateBtn onCreateBtnClick={this.createItem} />
           {
             tabView === LIST_VIEW &&
             <PriceList
@@ -150,7 +157,7 @@ class Home extends React.Component {
           }
           {
             tabView === CHART_VIEW &&
-            <h1>CHART_VIEW</h1>
+            <h1 className="chart-title">CHART_VIEW</h1>
           }
         </div>
       </React.Fragment>
