@@ -14,7 +14,7 @@ let props_with_item = {
   onCancelSubmit: jest.fn(),
 };
 
-let wrapper, wrapper2, formInstance;
+let wrapper, wrapper2, formInstance, formInstance2;
 
 export const getInputValue = (selector, wrapper) =>
   wrapper.find(selector).instance().value;
@@ -28,6 +28,7 @@ describe('test PriceForm component', () => {
     wrapper = mount(<PriceForm {...props} />);
     wrapper2 = mount(<PriceForm {...props_with_item} />);
     formInstance = wrapper.find(PriceForm).instance();
+    formInstance2 = wrapper2.find(PriceForm).instance();
   });
 
   /* 1 snapshot */
@@ -78,13 +79,14 @@ describe('test PriceForm component', () => {
     });
 
     /* 表单校验通过并触发提交回调 */
-    it('表单校验通过', () => {
-      const newItem = { title: 'test', price: 20, date: '2021-02-11' };
-      setInputValue('#title', newItem.title, wrapper);
-      setInputValue('#price', newItem.price, wrapper);
-      setInputValue('#date', newItem.date, wrapper);
+    it('表单校验通过并触发提交回调', () => {
+      const propsItem = testItems[1];
+      const emitItem = { title: '这是我的工资', price: 20000, date: '2018-08-18' };
+      setInputValue('#title', propsItem.title, wrapper);
+      setInputValue('#price', propsItem.price, wrapper);
+      setInputValue('#date', propsItem.date, wrapper);
       wrapper.find('form').simulate('submit');
-      expect(props.onFormSubmit).toHaveBeenCalledWith(newItem, false);
+      expect(props.onFormSubmit).toHaveBeenCalledWith(emitItem, false);
     });
 
     /* 触发取消回调 */
@@ -104,15 +106,15 @@ describe('test PriceForm component', () => {
     });
 
     it('修改默认值', () => {
-      const newItem = { title: 'test2', price: 22, date: '2021-02-12' };
-      setInputValue('#title', newItem.title, wrapper2);
-      setInputValue('#price', newItem.price, wrapper2);
-      setInputValue('#date', newItem.date, wrapper2);
+      const emitItem = { title: '这是我的工资', price: 20000, date: '2018-08-18' };
+      setInputValue('#title', emitItem.title, wrapper2);
+      setInputValue('#price', emitItem.price, wrapper2);
+      setInputValue('#date', emitItem.date, wrapper2);
       wrapper2.find('form').simulate('submit');
 
-      expect(formInstance.state.validatePass).toEqual(true);
+      expect(formInstance2.state.validatePass).toEqual(true);
       expect(wrapper2.find('.alert').length).toEqual(0);
-      expect(props_with_item.onFormSubmit).toHaveBeenCalledWith(newItem, true);
+      expect(props_with_item.onFormSubmit).toHaveBeenCalledWith({ ...props_with_item.item, ...emitItem }, true);
     });
   });
 });

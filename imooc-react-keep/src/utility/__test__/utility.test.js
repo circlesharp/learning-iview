@@ -37,6 +37,12 @@ describe('isValidDate', () => {
   it('judge 2020/01/12', () => {
     expect(isValidDate('2020/01/12')).toEqual(true);
   });
+  it('judge 2018/08/15', () => {
+    expect(isValidDate('2018/08/15')).toEqual(true);
+  });
+  it('judge 2018-8-15', () => {
+    expect(isValidDate('2018-08-15')).toEqual(true);
+  });
   it('judge 2020/01/32', () => {
     expect(isValidDate('2020/01/32')).toEqual(false);
   });

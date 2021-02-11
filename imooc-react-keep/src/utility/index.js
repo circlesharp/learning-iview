@@ -31,7 +31,7 @@ export const parseToYearAndMonth = str => {
 };
 
 export const isValidDate = dateString => {
-  const regExp = /^\d{4}\/\d{2}\/\d{2}$/;
+  const regExp = /^\d{4}[-/]\d{2}[-/]\d{2}$/;
   if (!dateString.match(regExp))
     return false;
 
