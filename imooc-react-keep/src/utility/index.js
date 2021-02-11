@@ -11,7 +11,7 @@ export const TYPE_OUTCOME = 'outcome';
 export const padLeft = n => {
   if (+n < 10) return `0${+n}`;
   return `${n}`;
-}
+};
 
 export const range = (size, startAt = 0) => {
   const arr = [];
@@ -19,13 +19,25 @@ export const range = (size, startAt = 0) => {
     arr[i] = startAt + i;
 
   return arr;
-}
+};
 
 export const parseToYearAndMonth = str => {
   const date = str ? new Date(str) : new Date();
-  
+
   return {
     year: date.getFullYear(),
     month: date.getMonth() + 1,
   };
-}
+};
+
+export const isValidDate = dateString => {
+  const regExp = /^\d{4}\/\d{2}\/\d{2}$/;
+  if (!dateString.match(regExp))
+    return false;
+
+  const date = new Date(dateString);
+  if (Number.isNaN(date.getTime()))
+    return false;
+
+  return true;
+};
