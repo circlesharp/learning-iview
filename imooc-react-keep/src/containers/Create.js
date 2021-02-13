@@ -1,23 +1,45 @@
 import React from 'react';
 import PriceForm from '../components/PriceForm';
-import { testItems } from '../testData';
+import CategorySelect from '../components/CategorySelect';
+import { Tabs, Tab } from '../components/Tabs';
+import { TYPE_INCOME, TYPE_OUTCOME } from '../utility';
+import { testCategories } from '../testData';
 
-const handleFormSubmit = () => { };
-const handleCancelSubmit = () => { };
+class Create extends React.Component {
+  constructor(props) {
+    super(props);
+  }
 
-const Create = ({ match }) => {
-  const props = {
-    item: testItems[0],
-    onFormSubmit: handleFormSubmit,
-    onCancelSubmit: handleCancelSubmit,
-  };
+  render() {
+    const filterCategories = testCategories.filter(category => category.type === TYPE_OUTCOME);
+    return (
+      <div
+        className="create-page py-3 px-3 rounded mt-3"
+        style={{ background: '#fff' }}
+      >
+        {/* 1 Tabs */}
+        <Tabs
+          activeIndex={0}
+          onTabChange={() => { }}
+        >
+          <Tab>支出</Tab>
+          <Tab>收入</Tab>
+        </Tabs>
 
-  return (
-    <div>
-      <h1>This is the create page. {match.params.id} </h1>
-      <PriceForm {...props} />
-    </div>
-  );
-};
+        {/* 2 CategorySelect */}
+        <CategorySelect
+          categories={filterCategories}
+          onSelectCategory={() => { }}
+        />
+
+        {/* 3 PriceForm */}
+        <PriceForm
+          onFormSubmit={() => { }}
+          onCancelSubmit={() => { }}
+        />
+      </div>
+    );
+  }
+}
 
 export default Create;
