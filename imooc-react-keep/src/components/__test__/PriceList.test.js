@@ -36,7 +36,7 @@ describe('PriceList component', () => {
   /* 测试每项是否渲染正确的 icon&price */
   it('should render correct icon and price for each item', () => {
     const iconList = wrapper.find('.list-group-item').first().find(Ionicon);
-    expect(iconList.length).toEqual(itemsWithCategory.length);
+    expect(iconList.length).toEqual(3); // 之前的应该错了，每一条应该显示 3 个 icon
     expect(iconList.first().props().icon)
       .toEqual(itemsWithCategory[0].category.iconName);
   });

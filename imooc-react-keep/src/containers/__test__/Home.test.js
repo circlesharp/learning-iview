@@ -4,7 +4,6 @@ import Home, { newItem } from '../Home';
 
 import { LIST_VIEW, CHART_VIEW } from '../../utility';
 import PriceList from '../../components/PriceList';
-import ViewTab from '../../components/ViewTab';
 import MonthPicker from '../../components/MonthPicker';
 import CreateBtn from '../../components/CreateBtn';
 
@@ -18,7 +17,6 @@ describe('test Home container component', () => {
   /* 1 默认状态 */
   it('默认状态', () => {
     expect(wrapper.find(PriceList).length).toEqual(1);
-    expect(wrapper.find(ViewTab).props().activeTab).toEqual(LIST_VIEW);
     expect(wrapper.find(MonthPicker).props().year).toEqual(2021);
     expect(wrapper.find(MonthPicker).props().month).toEqual(1);
     expect(wrapper.find(PriceList).props().items.length).toEqual(2);
@@ -29,7 +27,6 @@ describe('test Home container component', () => {
     wrapper.find('.nav-item a').last().simulate('click');
     expect(wrapper.find(PriceList).length).toEqual(0);
     expect(wrapper.find('.chart-title').length).toEqual(1);
-    expect(wrapper.find(ViewTab).props().activeTab).toEqual(CHART_VIEW);
   });
 
   /* 3 改变日期选择 */

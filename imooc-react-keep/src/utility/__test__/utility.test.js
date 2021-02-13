@@ -1,4 +1,4 @@
-import { padLeft, range, parseToYearAndMonth, isValidDate } from '../index';
+import { padLeft, range, parseToYearAndMonth, isValidDate, flattern } from '../index';
 
 describe('padLeft', () => {
   it('1 => 01', () => {
@@ -45,5 +45,13 @@ describe('isValidDate', () => {
   });
   it('judge 2020/01/32', () => {
     expect(isValidDate('2020/01/32')).toEqual(false);
+  });
+});
+
+describe('flattern', () => {
+  it('flattern an array', () => {
+    const arr = [{ id: '567', name: 'a' }, { id: '89', name: 'b' }];
+    const rst = { 567: arr[0], 89: arr[1] };
+    expect(flattern(arr)).toEqual(rst);
   });
 });

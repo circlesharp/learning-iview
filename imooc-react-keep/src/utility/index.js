@@ -41,3 +41,9 @@ export const isValidDate = dateString => {
 
   return true;
 };
+
+export const flattern = arr =>
+  arr.reduce((whole, part) => {
+    whole[part.id] = part;
+    return whole;
+  }, {});
