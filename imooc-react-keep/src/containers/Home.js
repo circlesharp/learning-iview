@@ -1,6 +1,7 @@
 import React from 'react';
 import Ionicon from 'react-ionicons';
 
+import withContext from '../WithContext';
 import PriceList from '../components/PriceList';
 import MonthPicker from '../components/MonthPicker';
 import TotalPrice from '../components/TotalPrice';
@@ -106,6 +107,7 @@ class Home extends React.Component {
   };
 
   render() {
+    const { data } = this.props;
     const { items, currentDate, tabView } = this.state;
     const itemsWithCategory = items.map(item => {
       item.category = categories[item.cid];
@@ -187,4 +189,4 @@ class Home extends React.Component {
   }
 }
 
-export default Home;
+export default withContext(Home);

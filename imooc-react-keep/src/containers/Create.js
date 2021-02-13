@@ -1,4 +1,5 @@
 import React from 'react';
+import withContext from '../WithContext';
 import PriceForm from '../components/PriceForm';
 import CategorySelect from '../components/CategorySelect';
 import { Tabs, Tab } from '../components/Tabs';
@@ -6,11 +7,12 @@ import { TYPE_INCOME, TYPE_OUTCOME } from '../utility';
 import { testCategories } from '../testData';
 
 class Create extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
 
   render() {
+    const { data } = this.props;
     const filterCategories = testCategories.filter(category => category.type === TYPE_OUTCOME);
     return (
       <div
@@ -42,4 +44,4 @@ class Create extends React.Component {
   }
 }
 
-export default Create;
+export default withContext(Create);
