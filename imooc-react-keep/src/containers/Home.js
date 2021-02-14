@@ -25,7 +25,7 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentDate: parseToYearAndMonth('2021-02-14'),
+      currentDate: parseToYearAndMonth('2018-08-14'),
       tabView: tabsText[0],
     };
   }
