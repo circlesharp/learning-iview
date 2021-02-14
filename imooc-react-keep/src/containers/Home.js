@@ -10,7 +10,7 @@ import CreateBtn from '../components/CreateBtn';
 import Loading from '../components/Loader';
 import { Tabs, Tab } from '../components/Tabs';
 
-import { LIST_VIEW, CHART_VIEW, TYPE_INCOME, TYPE_OUTCOME, parseToYearAndMonth, padLeft } from '../utility';
+import { LIST_VIEW, CHART_VIEW, TYPE_INCOME, TYPE_OUTCOME } from '../utility';
 
 export const newItem = {
   id: '4',

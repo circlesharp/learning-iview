@@ -15,12 +15,19 @@ class Create extends React.Component {
     const { items, categories } = this.props.data;
     const { id } = this.props.match.params;
 
-    console.log(categories[items[id].cid].type);
-
     this.state = {
       selectedTab: (id && items[id]) ? categories[items[id].cid].type : TYPE_OUTCOME,
       selectedCategory: (id && items[id]) ? categories[items[id].cid] : null,
     };
+  }
+
+  async componentDidMount() {
+    const { id } = this.props.match.params;
+    const { editItem, categories } = await this.props.actions.getEditData(id);
+    this.setState({
+      selectedTab: (id && editItem) ? categories[editItem.cid].type : TYPE_OUTCOME,
+      selectedCategory: (id && editItem) ? categories[editItem.cid] : null,
+    });
   }
 
   onTabChange = index => {
@@ -35,7 +42,7 @@ class Create extends React.Component {
     this.props.history.push('/');
   };
 
-  submitForm = (data, isEditMode) => {
+  submitForm = async (data, isEditMode) => {
     if (this.state.selectedCategory == null) {
       alert('please select category');
       return;
@@ -43,10 +50,10 @@ class Create extends React.Component {
 
     if (!isEditMode) {
       // create
-      this.props.actions.createItem(data, this.state.selectedCategory.id);
+      await this.props.actions.createItem(data, this.state.selectedCategory.id);
     } else {
       // update
-      this.props.actions.updateItem(data, this.state.selectedCategory.id);
+      await this.props.actions.updateItem(data, this.state.selectedCategory.id);
     }
 
     this.props.history.push('/');
