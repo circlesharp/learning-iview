@@ -25,18 +25,19 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentDate: parseToYearAndMonth('2018-08-14'),
       tabView: tabsText[0],
     };
+  }
+
+  componentDidMount() {
+    this.props.actions.getInitialData();
   }
 
   changeView = index => {
     this.setState({ tabView: tabsText[index] });
   };
   changeDate = (year, month) => {
-    this.setState({
-      currentDate: { year, month },
-    });
+    this.props.actions.selectNewMonth(year, month);
   };
   modifyItem = item => {
     this.props.history.push(`/edit/${item.id}`);
@@ -49,18 +50,15 @@ class Home extends React.Component {
   };
 
   render() {
-    const { items, categories } = this.props.data;
-    const { currentDate, tabView } = this.state;
+    const { items, categories, currentDate } = this.props.data;
+    const { tabView } = this.state;
     const itemsWithCategory = Object.keys(items).map(id => {
       items[id].category = categories[items[id].cid];
       return items[id];
     });
-    const itemsFiltByDate = itemsWithCategory.filter(item =>
-      item.date.includes(`${currentDate.year}-${padLeft(currentDate.month)}`)
-    );
 
     let totalIncome = 0, totalOutcome = 0;
-    itemsFiltByDate.forEach(item => {
+    itemsWithCategory.forEach(item => {
       if (item.category.type === TYPE_INCOME)
         totalIncome += item.price;
       if (item.category.type === TYPE_OUTCOME)
@@ -116,7 +114,7 @@ class Home extends React.Component {
           {
             tabView === LIST_VIEW &&
             <PriceList
-              items={itemsFiltByDate}
+              items={itemsWithCategory}
               onModifyItem={this.modifyItem}
               onDeleteItem={this.deleteItem}
             />

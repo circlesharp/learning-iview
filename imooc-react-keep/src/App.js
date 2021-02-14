@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
@@ -6,7 +7,6 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import Home from './containers/Home';
 import Create from './containers/Create';
 import { flattern, createId, parseToYearAndMonth } from './utility';
-import { testItems, testCategories } from './testData';
 
 export const AppContext = React.createContext();
 
@@ -14,14 +14,37 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      items: flattern(testItems),
-      categories: flattern(testCategories),
+      items: {},
+      categories: {},
+      currentDate: parseToYearAndMonth('2018-11-11'),
     };
     this.actions = {
+      getInitialData: () => {
+        const { currentDate } = this.state;
+        const getURLWithDate = `/items?monthCategory=${currentDate.year}-${currentDate.month}&_sort=timestamp&_order=desc`;
+        const promiseArr = [axios.get('/categories'), axios.get(getURLWithDate)];
+        Promise.all(promiseArr).then(([categories, items]) => {
+          this.setState({
+            items: flattern(items.data),
+            categories: flattern(categories.data),
+          });
+        });
+      },
+      selectNewMonth: (year, month) => {
+        const getURLWithDate = `/items?monthCategory=${year}-${month}&_sort=timestamp&_order=desc`;
+        axios.get(getURLWithDate).then(items => {
+          this.setState({
+            items: flattern(items.data),
+            currentDate: { year, month },
+          });
+        });
+      },
       deleteItem: item => {
-        delete this.state.items[item.id];
-        this.setState({
-          items: this.state.items,
+        axios.delete(`/items/${item.id}`).then(() => {
+          delete this.state.items[item.id];
+          this.setState({
+            items: this.state.items,
+          });
         });
       },
       createItem: (data, categoryId) => {
