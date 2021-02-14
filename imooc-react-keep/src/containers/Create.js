@@ -1,19 +1,67 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import withContext from '../WithContext';
 import PriceForm from '../components/PriceForm';
 import CategorySelect from '../components/CategorySelect';
 import { Tabs, Tab } from '../components/Tabs';
 import { TYPE_INCOME, TYPE_OUTCOME } from '../utility';
-import { testCategories } from '../testData';
+
+const tabsText = [TYPE_OUTCOME, TYPE_INCOME];
 
 class Create extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  // }
+  constructor(props) {
+    super(props);
+
+    const { items, categories } = this.props.data;
+    const { id } = this.props.match.params;
+
+    console.log(categories[items[id].cid].type);
+
+    this.state = {
+      selectedTab: (id && items[id]) ? categories[items[id].cid].type : TYPE_OUTCOME,
+      selectedCategory: (id && items[id]) ? categories[items[id].cid] : null,
+    };
+  }
+
+  onTabChange = index => {
+    this.setState({ selectedTab: tabsText[index] });
+  };
+
+  selectCategory = category => {
+    this.setState({ selectedCategory: category });
+  };
+
+  onCancelSubmit = () => {
+    this.props.history.push('/');
+  };
+
+  submitForm = (data, isEditMode) => {
+    if (this.state.selectedCategory == null) {
+      alert('please select category');
+      return;
+    }
+
+    if (!isEditMode) {
+      // create
+      this.props.actions.createItem(data, this.state.selectedCategory.id);
+    } else {
+      // update
+      this.props.actions.updateItem(data, this.state.selectedCategory.id);
+    }
+
+    this.props.history.push('/');
+  };
 
   render() {
-    const { data } = this.props;
-    const filterCategories = testCategories.filter(category => category.type === TYPE_OUTCOME);
+    const { items, categories } = this.props.data;
+    const { selectedTab, selectedCategory } = this.state;
+    const { id } = this.props.match.params;
+    const editItem = (id && items[id]) ? items[id] : {};
+
+    const filterCategories = Object.keys(categories)
+      .filter(id => categories[id].type === selectedTab)
+      .map(id => categories[id]);
+
     return (
       <div
         className="create-page py-3 px-3 rounded mt-3"
@@ -21,8 +69,8 @@ class Create extends React.Component {
       >
         {/* 1 Tabs */}
         <Tabs
-          activeIndex={0}
-          onTabChange={() => { }}
+          activeIndex={tabsText.indexOf(selectedTab)} // 可用 findIndex 代替
+          onTabChange={this.onTabChange}
         >
           <Tab>支出</Tab>
           <Tab>收入</Tab>
@@ -31,17 +79,19 @@ class Create extends React.Component {
         {/* 2 CategorySelect */}
         <CategorySelect
           categories={filterCategories}
-          onSelectCategory={() => { }}
+          selectedCategory={selectedCategory}
+          onSelectCategory={this.selectCategory}
         />
 
         {/* 3 PriceForm */}
         <PriceForm
-          onFormSubmit={() => { }}
-          onCancelSubmit={() => { }}
+          item={editItem}
+          onFormSubmit={this.submitForm}
+          onCancelSubmit={this.onCancelSubmit}
         />
       </div>
     );
   }
 }
 
-export default withContext(Create);
+export default withRouter(withContext(Create));

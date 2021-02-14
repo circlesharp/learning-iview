@@ -5,8 +5,8 @@ const withContent = Component =>
   props => (
     <AppContext.Consumer>
       {
-        ({ state }) =>
-          (<Component {...props} data={state} />)
+        ({ state, actions }) =>
+          <Component {...props} data={state} actions={actions} />
       }
     </AppContext.Consumer>
   );

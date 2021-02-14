@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import Ionicon from 'react-ionicons';
 
 import withContext from '../WithContext';
@@ -9,52 +10,6 @@ import CreateBtn from '../components/CreateBtn';
 import { Tabs, Tab } from '../components/Tabs';
 
 import { LIST_VIEW, CHART_VIEW, TYPE_INCOME, TYPE_OUTCOME, parseToYearAndMonth, padLeft } from '../utility';
-
-export const categories = {
-  '1': {
-    id: '1',
-    name: '旅行',
-    type: 'outcome',
-    iconName: 'ios-plane',
-  },
-  '2': {
-    id: '2',
-    name: '工资',
-    type: 'income',
-    iconName: 'ios-cash-outline',
-  },
-};
-
-export const items = [
-  {
-    id: '1',
-    title: '去云南旅游',
-    price: 200,
-    date: '2020-12-26',
-    cid: '1',
-  },
-  {
-    id: '2',
-    title: '捡到钱',
-    price: 8000,
-    date: '2021-01-26',
-    cid: '2',
-  },
-  {
-    id: '3',
-    title: '去北京旅游',
-    price: 2200,
-    date: '2021-01-26',
-    cid: '1',
-  },
-  {
-    id: '4',
-    title: '去梧村旅游',
-    price: 1100,
-    date: '2021-02-09',
-    cid: '1',
-  },
-];
 
 export const newItem = {
   id: '4',
@@ -70,8 +25,7 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      items,
-      currentDate: parseToYearAndMonth('2021-01-26'),
+      currentDate: parseToYearAndMonth('2021-02-14'),
       tabView: tabsText[0],
     };
   }
@@ -84,34 +38,22 @@ class Home extends React.Component {
       currentDate: { year, month },
     });
   };
-  modifyItem = modifiedItem => {
-    const modifiedItems = this.state.items.map(item => {
-      if (item.id === modifiedItem.id)
-        return { ...item, title: 'modified title' };
-      return item;
-    });
-    this.setState({
-      items: modifiedItems,
-    });
+  modifyItem = item => {
+    this.props.history.push(`/edit/${item.id}`);
   };
   createItem = () => {
-    this.setState({
-      items: [newItem, ...this.state.items],
-    });
+    this.props.history.push('/create');
   };
-  deleteItem = deletedItem => {
-    const deletedItems = this.state.items.filter(item => item.id !== deletedItem.id);
-    this.setState({
-      items: deletedItems,
-    });
+  deleteItem = item => {
+    this.props.actions.deleteItem(item);
   };
 
   render() {
-    const { data } = this.props;
-    const { items, currentDate, tabView } = this.state;
-    const itemsWithCategory = items.map(item => {
-      item.category = categories[item.cid];
-      return item;
+    const { items, categories } = this.props.data;
+    const { currentDate, tabView } = this.state;
+    const itemsWithCategory = Object.keys(items).map(id => {
+      items[id].category = categories[items[id].cid];
+      return items[id];
     });
     const itemsFiltByDate = itemsWithCategory.filter(item =>
       item.date.includes(`${currentDate.year}-${padLeft(currentDate.month)}`)
@@ -189,4 +131,4 @@ class Home extends React.Component {
   }
 }
 
-export default withContext(Home);
+export default withRouter(withContext(Home));

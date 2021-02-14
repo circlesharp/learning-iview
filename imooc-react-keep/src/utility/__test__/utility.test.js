@@ -1,4 +1,4 @@
-import { padLeft, range, parseToYearAndMonth, isValidDate, flattern } from '../index';
+import { padLeft, range, parseToYearAndMonth, isValidDate, flattern, createId } from '../index';
 
 describe('padLeft', () => {
   it('1 => 01', () => {
@@ -53,5 +53,13 @@ describe('flattern', () => {
     const arr = [{ id: '567', name: 'a' }, { id: '89', name: 'b' }];
     const rst = { 567: arr[0], 89: arr[1] };
     expect(flattern(arr)).toEqual(rst);
+  });
+});
+
+describe('createId', () => {
+  it('create a simple id', () => {
+    const id = createId();
+    expect(id.length).toEqual(10);
+    expect(id[0]).toEqual('_');
   });
 });

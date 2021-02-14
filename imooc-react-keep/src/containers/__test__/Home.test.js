@@ -1,8 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import Home, { newItem } from '../Home';
-
-import { LIST_VIEW, CHART_VIEW } from '../../utility';
 import PriceList from '../../components/PriceList';
 import MonthPicker from '../../components/MonthPicker';
 import CreateBtn from '../../components/CreateBtn';
