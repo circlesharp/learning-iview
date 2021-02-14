@@ -43,27 +43,35 @@ class App extends React.Component {
         });
       }),
       getEditData: withLoading(async id => {
-        let promiseArr = [axios.get('/categories')];
-        if (id) {
-          const getURLWithId = `/items/${id}`;
-          promiseArr.push(axios.get(getURLWithId));
+        let categories, editItem;
+
+        if (Object.keys(this.state.categories).length === 0) {
+          categories = await axios.get('/categories');
         }
-        const [categories, editItem] = await Promise.all(promiseArr);
+
+        const itemAlreadyFeched = Object.keys(this.state.items).includes(id);
+
+        if (id && !itemAlreadyFeched) {
+          const getURLWithId = `/items/${id}`;
+          editItem = await axios.get(getURLWithId);
+        }
+        const finalCategories = categories ? flattern(categories.data) : this.state.categories;
+        const finalItem = editItem ? editItem.data : this.state.items[id];
 
         if (id) {
           this.setState({
-            categories: flattern(categories.data),
-            items: { ...this.state.items, [id]: editItem.data },
+            categories: finalCategories,
+            items: { ...this.state.items, [id]: finalItem },
           });
         } else {
           this.setState({
-            categories: flattern(categories.data),
+            categories: finalCategories,
           });
         }
 
         return {
-          categories: flattern(categories.data),
-          editItem: editItem ? editItem.data : null,
+          categories: finalCategories,
+          editItem: finalItem,
         };
       }),
       selectNewMonth: withLoading(async (year, month) => {
