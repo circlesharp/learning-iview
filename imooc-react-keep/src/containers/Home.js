@@ -7,6 +7,7 @@ import PriceList from '../components/PriceList';
 import MonthPicker from '../components/MonthPicker';
 import TotalPrice from '../components/TotalPrice';
 import CreateBtn from '../components/CreateBtn';
+import Loading from '../components/Loader';
 import { Tabs, Tab } from '../components/Tabs';
 
 import { LIST_VIEW, CHART_VIEW, TYPE_INCOME, TYPE_OUTCOME, parseToYearAndMonth, padLeft } from '../utility';
@@ -50,7 +51,7 @@ class Home extends React.Component {
   };
 
   render() {
-    const { items, categories, currentDate } = this.props.data;
+    const { items, categories, currentDate, isLoading } = this.props.data;
     const { tabView } = this.state;
     const itemsWithCategory = Object.keys(items).map(id => {
       items[id].category = categories[items[id].cid];
@@ -87,41 +88,49 @@ class Home extends React.Component {
         </header>
 
         <div className="content-area py-3 px-3">
-          <Tabs
-            activeIndex={0}
-            onTabChange={this.changeView}
-          >
-            <Tab>
-              <Ionicon
-                className="rounded-circle mr-2"
-                fontSize="25px"
-                color="#007bff"
-                icon='ios-paper'
-              />
+          {
+            isLoading && <Loading />
+          }
+
+          {!isLoading &&
+            <React.Fragment>
+              <Tabs
+                activeIndex={0}
+                onTabChange={this.changeView}
+              >
+                <Tab>
+                  <Ionicon
+                    className="rounded-circle mr-2"
+                    fontSize="25px"
+                    color="#007bff"
+                    icon='ios-paper'
+                  />
               列表模式
             </Tab>
-            <Tab>
-              <Ionicon
-                className="rounded-circle mr-2"
-                fontSize="25px"
-                color="#007bff"
-                icon='ios-pie'
-              />
+                <Tab>
+                  <Ionicon
+                    className="rounded-circle mr-2"
+                    fontSize="25px"
+                    color="#007bff"
+                    icon='ios-pie'
+                  />
               图表模式
             </Tab>
-          </Tabs>
-          <CreateBtn onCreateBtnClick={this.createItem} />
-          {
-            tabView === LIST_VIEW &&
-            <PriceList
-              items={itemsWithCategory}
-              onModifyItem={this.modifyItem}
-              onDeleteItem={this.deleteItem}
-            />
-          }
-          {
-            tabView === CHART_VIEW &&
-            <h1 className="chart-title">CHART_VIEW</h1>
+              </Tabs>
+              <CreateBtn onCreateBtnClick={this.createItem} />
+              {
+                tabView === LIST_VIEW &&
+                <PriceList
+                  items={itemsWithCategory}
+                  onModifyItem={this.modifyItem}
+                  onDeleteItem={this.deleteItem}
+                />
+              }
+              {
+                tabView === CHART_VIEW &&
+                <h1 className="chart-title">CHART_VIEW</h1>
+              }
+            </React.Fragment>
           }
         </div>
       </React.Fragment>

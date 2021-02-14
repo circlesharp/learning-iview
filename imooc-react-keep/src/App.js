@@ -14,17 +14,20 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      isLoading: false,
       items: {},
       categories: {},
       currentDate: parseToYearAndMonth('2018-11-11'),
     };
     this.actions = {
       getInitialData: () => {
+        this.setState({ isLoading: true });
         const { currentDate } = this.state;
         const getURLWithDate = `/items?monthCategory=${currentDate.year}-${currentDate.month}&_sort=timestamp&_order=desc`;
         const promiseArr = [axios.get('/categories'), axios.get(getURLWithDate)];
         Promise.all(promiseArr).then(([categories, items]) => {
           this.setState({
+            isLoading: false,
             items: flattern(items.data),
             categories: flattern(categories.data),
           });
