@@ -3,12 +3,13 @@ import { withRouter } from 'react-router-dom';
 import withContext from '../WithContext';
 import PriceForm from '../components/PriceForm';
 import CategorySelect from '../components/CategorySelect';
+import Loader from '../components/Loader';
 import { Tabs, Tab } from '../components/Tabs';
 import { TYPE_INCOME, TYPE_OUTCOME } from '../utility';
 
 const tabsText = [TYPE_OUTCOME, TYPE_INCOME];
 
-class Create extends React.Component {
+export class Create extends React.Component {
   constructor(props) {
     super(props);
 
@@ -60,7 +61,7 @@ class Create extends React.Component {
   };
 
   render() {
-    const { items, categories } = this.props.data;
+    const { items, categories, isLoading } = this.props.data;
     const { selectedTab, selectedCategory } = this.state;
     const { id } = this.props.match.params;
     const editItem = (id && items[id]) ? items[id] : {};
@@ -82,6 +83,11 @@ class Create extends React.Component {
           <Tab>支出</Tab>
           <Tab>收入</Tab>
         </Tabs>
+
+        {/* 1.5 Loader */}
+        {
+          isLoading && <Loader />
+        }
 
         {/* 2 CategorySelect */}
         <CategorySelect

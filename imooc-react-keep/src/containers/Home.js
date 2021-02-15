@@ -7,7 +7,7 @@ import PriceList from '../components/PriceList';
 import MonthPicker from '../components/MonthPicker';
 import TotalPrice from '../components/TotalPrice';
 import CreateBtn from '../components/CreateBtn';
-import Loading from '../components/Loader';
+import Loader from '../components/Loader';
 import { Tabs, Tab } from '../components/Tabs';
 
 import { LIST_VIEW, CHART_VIEW, TYPE_INCOME, TYPE_OUTCOME } from '../utility';
@@ -22,7 +22,7 @@ export const newItem = {
 
 const tabsText = [LIST_VIEW, CHART_VIEW];
 
-class Home extends React.Component {
+export class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -89,7 +89,7 @@ class Home extends React.Component {
 
         <div className="content-area py-3 px-3">
           {
-            isLoading && <Loading />
+            isLoading && <Loader />
           }
 
           {!isLoading &&
