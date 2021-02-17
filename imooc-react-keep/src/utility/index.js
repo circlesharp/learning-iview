@@ -5,6 +5,16 @@ export const CHART_VIEW = 'chart';
 export const TYPE_INCOME = 'income';
 export const TYPE_OUTCOME = 'outcome';
 
+export const Colors = {
+  blue: '#347eff',
+  deepBlue: '#61dafb',
+  green: '#28a745',
+  red: '#dc3545',
+  gray: '#555',
+  lightGray: '#efefef',
+  white: '#fff',
+};
+
 
 /* 公共方法 */
 
@@ -50,3 +60,22 @@ export const flattern = arr =>
 
 export const createId = () =>
   `_${Math.random().toString(36).substr(2, 9)}`;
+
+export const generateChartDataByCategory = (items, type = TYPE_INCOME) => {
+  const categoryMap = {};
+  items.filter(item => item.category.type === type)
+    .forEach(item => {
+      if (categoryMap[item.cid]) {
+        categoryMap[item.cid].value += +item.price;
+        categoryMap[item.cid].items.push(item.id);
+      } else {
+        categoryMap[item.cid] = {
+          name: item.category.name,
+          value: +item.price,
+          items: [item.id],
+        };
+      }
+    });
+
+  return Object.keys(categoryMap).map(mapKey => categoryMap[mapKey]);
+};

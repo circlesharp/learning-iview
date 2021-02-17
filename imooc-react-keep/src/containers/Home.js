@@ -8,9 +8,10 @@ import MonthPicker from '../components/MonthPicker';
 import TotalPrice from '../components/TotalPrice';
 import CreateBtn from '../components/CreateBtn';
 import Loader from '../components/Loader';
+import PieChart from '../components/PieChart';
 import { Tabs, Tab } from '../components/Tabs';
 
-import { LIST_VIEW, CHART_VIEW, TYPE_INCOME, TYPE_OUTCOME } from '../utility';
+import { LIST_VIEW, CHART_VIEW, TYPE_INCOME, TYPE_OUTCOME, generateChartDataByCategory } from '../utility';
 
 export const newItem = {
   id: '4',
@@ -57,6 +58,9 @@ export class Home extends React.Component {
       items[id].category = categories[items[id].cid];
       return items[id];
     });
+
+    const chartOutcomeDateByCategory = generateChartDataByCategory(itemsWithCategory, TYPE_OUTCOME);
+    const chartIncomeDateByCategory = generateChartDataByCategory(itemsWithCategory, TYPE_INCOME);
 
     let totalIncome = 0, totalOutcome = 0;
     itemsWithCategory.forEach(item => {
@@ -128,7 +132,10 @@ export class Home extends React.Component {
               }
               {
                 tabView === CHART_VIEW &&
-                <h1 className="chart-title">CHART_VIEW</h1>
+                <React.Fragment>
+                  <PieChart title="本月支出" categoryData={chartOutcomeDateByCategory} />
+                  <PieChart title="本月收入" categoryData={chartIncomeDateByCategory} />
+                </React.Fragment>
               }
             </React.Fragment>
           }

@@ -1,4 +1,5 @@
-import { padLeft, range, parseToYearAndMonth, isValidDate, flattern, createId } from '../index';
+import { padLeft, range, parseToYearAndMonth, isValidDate, flattern, createId, generateChartDataByCategory } from '../index';
+import { testCategories, testItems } from '../../testData';
 
 describe('padLeft', () => {
   it('1 => 01', () => {
@@ -61,5 +62,33 @@ describe('createId', () => {
     const id = createId();
     expect(id.length).toEqual(10);
     expect(id[0]).toEqual('_');
+  });
+});
+
+describe('generateChartDataByCategory', () => {
+  const categoryMap = {};
+  testCategories.forEach(category => {
+    categoryMap[category.id] = category;
+  });
+  const itemsWithCategory = testItems.map(item => ({ ...item, category: categoryMap[item.cid] }));
+
+  const incomeChartData = generateChartDataByCategory(itemsWithCategory);
+  const outcomeChartData = generateChartDataByCategory(itemsWithCategory, 'outcome');
+
+  const incomeRst = [
+    { name: '理财', value: 1300, items: ['_1fg1wme63', '_qryggm5y8'] }
+  ];
+  const outcomeRst = [
+    { name: '旅行', value: 100, items: ['_kly1klf4g'] },
+    { name: '餐饮', value: 20000, items: ['_bd16bjeen'] },
+    { name: '购物', value: 600, items: ['_jjfice21k', '_qryggm511'] }
+  ];
+
+  it('income chart data', () => {
+    expect(incomeChartData).toEqual(incomeRst);
+  });
+
+  it('outcome chart data', () => {
+    expect(outcomeChartData).toEqual(outcomeRst);
   });
 });
