@@ -1,5 +1,5 @@
 const express = require('express');
-
+const models = require('../models');
 const userRouter = require('./router/user_router');
 const { error_handle_middleware, not_found_middleware, } = require('./middleware/error_middleware');
 
