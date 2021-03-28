@@ -7,6 +7,9 @@ class InitManager {
 
 		// 自动引入 api 的 router
 		InitManager.initLoadRouters();
+
+		// 将自定义异常挂到 global
+		InitManager.loadHttpException();
 	}
 
 	static initLoadRouters() {
@@ -21,6 +24,10 @@ class InitManager {
 				},
 			},
 		);
+	}
+
+	static loadHttpException() {
+		global.$errs = require(`${process.cwd()}/core/http-exception`);
 	}
 }
 
