@@ -1,5 +1,5 @@
 const Router = require("koa-router");
-const { PositiveIntergerValidator } = require('../validators/validator');
+const { PositiveIntergerValidator } = require('../../validators/validator');
 
 const router = new Router();
 
@@ -29,7 +29,7 @@ const getAllParamsByValidator = v => {
 router.post('/v1/:id/basic', (ctx, next) => {
 	const v = new PositiveIntergerValidator();
 	v.validate(ctx);
-	v.get('path.id'); b;
+	v.get('path.id');
 
 	if (Math.random() > 0.5) {
 		throw new global.$errs.ParameterException('basic 随机报错', -1);

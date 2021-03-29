@@ -18,7 +18,7 @@ class InitManager {
 	static initLoadRouters() {
 		requireDirector(
 			module,
-			`${process.cwd()}/api`,
+			`${process.cwd()}/app/api`,
 			{
 				visit: function whenLoadModule(obj) {
 					if (obj instanceof Router) {

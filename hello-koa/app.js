@@ -12,4 +12,7 @@ app.use(parser());
 
 InitManager.initCore(app);
 
+// 临时触发 model
+require('./app/models/user');
+
 app.listen(3002);
