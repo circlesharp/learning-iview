@@ -10,6 +10,9 @@ class InitManager {
 
 		// 将自定义异常挂到 global
 		InitManager.loadHttpException();
+
+		// 将项目配置挂到 global
+		InitManager.loadConfig();
 	}
 
 	static initLoadRouters() {
@@ -28,6 +31,12 @@ class InitManager {
 
 	static loadHttpException() {
 		global.$errs = require(`${process.cwd()}/core/http-exception`);
+	}
+
+	static loadConfig(path = process.cwd()) {
+		const configPath = `${path}/config/config.js`;
+		const config = require(configPath);
+		global.$config = config;
 	}
 }
 

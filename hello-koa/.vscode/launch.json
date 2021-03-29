@@ -1,0 +1,26 @@
+{
+	"configurations": [
+		{
+			"console": "integratedTerminal",
+			"internalConsoleOptions": "neverOpen",
+			"name": "nodemon",
+			"program": "${workspaceFolder}/app.js",
+			"request": "launch",
+			"restart": true,
+			"runtimeExecutable": "nodemon",
+			"type": "pwa-node"
+		},
+		{
+			"name": "whole project",
+			"program": "${workspaceFolder}/app.js",
+			"request": "launch",
+			"type": "pwa-node"
+		},
+		{
+			"name": "current file",
+			"program": "${file}",
+			"request": "launch",
+			"type": "pwa-node"
+		}
+	]
+}
