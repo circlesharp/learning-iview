@@ -1,4 +1,13 @@
-import {observable, autorun, computed, when, reaction, action, configure} from 'mobx';
+import {observable, autorun, computed, when, reaction, action, configure, runInAction, flow} from 'mobx';
+
+// ====================== helpers ======================
+function fetchProjectsSomehow(arr = ['A', 'B', 'c']) {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve(arr);
+    }, 1000);
+  })
+}
 
 // observable 包装 对象实例
 (function() {
@@ -155,7 +164,7 @@ import {observable, autorun, computed, when, reaction, action, configure} from '
   todos[1].done = true;
 });
 
-// action
+// action 1
 // 动作 action 用来修改状态的东西
 (function() {
   class Ticker {
@@ -177,17 +186,11 @@ import {observable, autorun, computed, when, reaction, action, configure} from '
   }, 1000);
 });
 
+// action 2 异步编写 action
+// 包装 action 的回调函数
 (function() {
   // 开启强制动作
   configure({ enforceActions: 'always' });
-
-  function fetchProjectsSomehow(arr = ['A', 'B', 'c']) {
-    return new Promise(resolve => {
-      setTimeout(() => {
-        resolve(arr);
-      }, 1000);
-    })
-  }
 
   class Store {
     @observable projects = [];
@@ -215,4 +218,121 @@ import {observable, autorun, computed, when, reaction, action, configure} from '
 
   store.fetchProjects();
   store.fetchProjects(['a', 'b', 'd']);
+});
+
+// action 3 异步编写 action
+// runInAction
+//  1. 不用为整个回调创建一个 action
+//  2. 不用到处写 action
+(function() {
+  configure({ enforceActions: 'always' });
+
+  class Store {
+    @observable projects = [];
+    @observable state = 'pending';
+
+    @action
+    fetchProjects(arr) {
+      this.state = 'pending';
+      fetchProjectsSomehow(arr).then(projects => {
+        runInAction(() => {
+          this.projects = projects.map(project => project.toUpperCase())
+          this.state = 'done'
+        })
+      })
+    }
+  }
+
+  const store = new Store();
+
+  reaction(
+    () => store.projects,
+    () => console.log(store.projects),
+  )
+
+  store.fetchProjects();
+  store.fetchProjects(['a', 'b', 'd']);
+});
+
+// action 4 异步编写 action
+// async / await
+// 每个 await 之后, 状态修改代码应该被包装成动作
+(function() {
+  configure({ enforceActions: 'always' });
+
+  class Store {
+    @observable projects = [];
+    @observable state = 'pending';
+
+    @action
+    async fetchProjects(arr) {
+      this.state = 'pending';
+      try {
+        const projects = await fetchProjectsSomehow(arr);
+        runInAction(() => {
+          this.projects = projects.map(project => project.toUpperCase());
+          this.state = 'done';
+        });
+      } catch (error) {
+        runInAction(() => {
+          this.projects = [];
+          this.state = 'error';
+        });
+      }
+    }
+  }
+
+  const store = new Store();
+
+  reaction(
+    () => store.projects,
+    () => console.log(store.projects),
+  )
+
+  store.fetchProjects();
+  store.fetchProjects(['a', 'b', 'd']);
+});
+
+// action 5 异步编写 action
+// flow 自动包装异步代码
+(function() {
+  // An arrow function expression is a compact alternative to a traditional function expression, but is limited and can't be used in all situations.
+  // Differences & Limitations:
+
+  // Does not have its own bindings to this or super, and should not be used as methods.
+  // Does not have arguments, or new.target keywords.
+  // Not suitable for call, apply and bind methods, which generally rely on establishing a scope.
+  // Can not be used as constructors.
+  // Can not use yield, within its body.
+  configure({ enforceActions: 'always' });
+
+  class Store {
+    @observable projects = [];
+    @observable state = 'pending';
+
+    // 不需要手动 @action (除非想要绑定 this)
+    @action.bound
+    fetchProjects = flow(function * (arr) {
+      this.state = 'pending';
+      try {
+        const projects = yield fetchProjectsSomehow(arr);
+        this.projects = projects.map(project => project.toUpperCase());
+        this.state = 'done';
+      } catch (error) {
+        this.projects = [];
+        this.state = 'error';
+      }
+    })
+  }
+
+  const store = new Store();
+  const fetchProjects = store.fetchProjects;
+
+  reaction(
+    () => store.projects,
+    () => console.log(store.projects),
+  )
+
+  fetchProjects();
+  fetchProjects(['a', 'b', 'd']);
 })();
