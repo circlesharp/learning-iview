@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "bb": "npx babel src --out-dir lib",
+    "bb": "npx babel src --out-dir dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -20,6 +20,6 @@
     "@babel/preset-env": "^7.13.12"
   },
   "dependencies": {
-    "mobx": "^6.1.8"
+    "mobx": "^5.15.7"
   }
 }

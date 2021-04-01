@@ -1714,10 +1714,10 @@ mixin-deep@^1.2.0:
     for-in "^1.0.2"
     is-extendable "^1.0.1"
 
-mobx@^6.1.8:
-  version "6.1.8"
-  resolved "https://registry.npm.taobao.org/mobx/download/mobx-6.1.8.tgz#5d03cb76d8f7694dd82bfb2578d886945b66450d"
-  integrity sha1-XQPLdtj3aU3YK/sleNiGlFtmRQ0=
+mobx@^5.15.7:
+  version "5.15.7"
+  resolved "https://registry.npm.taobao.org/mobx/download/mobx-5.15.7.tgz#b9a5f2b6251f5d96980d13c78e9b5d8d4ce22665"
+  integrity sha1-uaXytiUfXZaYDRPHjptdjUziJmU=
 
 ms@2.0.0:
   version "2.0.0"
