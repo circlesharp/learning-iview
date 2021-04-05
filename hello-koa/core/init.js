@@ -5,14 +5,14 @@ class InitManager {
 	static initCore(app) {
 		InitManager.app = app;
 
-		// 自动引入 api 的 router
-		InitManager.initLoadRouters();
+		// 将项目配置挂到 global
+		InitManager.loadConfig();
 
 		// 将自定义异常挂到 global
 		InitManager.loadHttpException();
 
-		// 将项目配置挂到 global
-		InitManager.loadConfig();
+		// 自动引入 api 的 router
+		InitManager.initLoadRouters();
 	}
 
 	static initLoadRouters() {

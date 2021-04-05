@@ -26,9 +26,9 @@ const getAllParamsByValidator = v => {
 	return query;
 };
 
-router.post('/v1/:id/basic', (ctx, next) => {
+router.post('/v1/:id/basic', async (ctx, next) => {
 	const v = new PositiveIntergerValidator();
-	v.validate(ctx);
+	await v.validate(ctx);
 	v.get('path.id');
 
 	if (Math.random() > 0.5) {

@@ -1,19 +1,9 @@
 /* by 7yue 先生 */
 
 const validator = require('validator');
-const {
-	ParameterException
-} = require('./http-exception');
-const {
-	get,
-	last,
-	set,
-	cloneDeep
-} = require("lodash");
-const {
-	findMembers
-} = require('./util');
-
+const { get, last, set, cloneDeep } = require('lodash');
+const { ParameterException } = require('./http-exception');
+const { findMembers } = require('./util');
 
 class LinValidator {
 	constructor() {
@@ -21,13 +11,12 @@ class LinValidator {
 		this.parsed = {};
 	}
 
-
 	_assembleAllParams(ctx) {
 		return {
 			body: ctx.request.body,
 			query: ctx.request.query,
 			path: ctx.params,
-			header: ctx.request.header
+			header: ctx.request.header,
 		};
 	}
 
@@ -61,20 +50,20 @@ class LinValidator {
 		return false;
 	}
 
-	validate(ctx, alias = {}) {
+	async validate(ctx, alias = {}) {
 		this.alias = alias;
 		let params = this._assembleAllParams(ctx);
 		this.data = cloneDeep(params);
 		this.parsed = cloneDeep(params);
 
 		const memberKeys = findMembers(this, {
-			filter: this._findMembersFilter.bind(this)
+			filter: this._findMembersFilter.bind(this),
 		});
 
 		const errorMsgs = [];
 		// const map = new Map(memberKeys)
 		for (let key of memberKeys) {
-			const result = this._check(key, alias);
+			const result = await this._check(key, alias);
 			if (!result.success) {
 				errorMsgs.push(result.msg);
 			}
@@ -86,12 +75,12 @@ class LinValidator {
 		return this;
 	}
 
-	_check(key, alias = {}) {
-		const isCustomFunc = typeof (this[key]) == 'function' ? true : false;
+	async _check(key, alias = {}) {
+		const isCustomFunc = typeof this[key] == 'function' ? true : false;
 		let result;
 		if (isCustomFunc) {
 			try {
-				this[key](this.data);
+				await this[key](this.data);
 				result = new RuleResult(true);
 			} catch (error) {
 				result = new RuleResult(false, error.msg || error.message || '参数错误');
@@ -120,12 +109,12 @@ class LinValidator {
 			const msg = `${isCustomFunc ? '' : key}${result.msg}`;
 			return {
 				msg: msg,
-				success: false
+				success: false,
 			};
 		}
 		return {
 			msg: 'ok',
-			success: true
+			success: true,
 		};
 	}
 
@@ -135,33 +124,33 @@ class LinValidator {
 		if (value) {
 			return {
 				value,
-				path: ['query', key]
+				path: ['query', key],
 			};
 		}
 		value = get(this.data, ['body', key]);
 		if (value) {
 			return {
 				value,
-				path: ['body', key]
+				path: ['body', key],
 			};
 		}
 		value = get(this.data, ['path', key]);
 		if (value) {
 			return {
 				value,
-				path: ['path', key]
+				path: ['path', key],
 			};
 		}
 		value = get(this.data, ['header', key]);
 		if (value) {
 			return {
 				value,
-				path: ['header', key]
+				path: ['header', key],
 			};
 		}
 		return {
 			value: null,
-			path: []
+			path: [],
 		};
 	}
 }
@@ -170,7 +159,7 @@ class RuleResult {
 	constructor(pass, msg = '') {
 		Object.assign(this, {
 			pass,
-			msg
+			msg,
 		});
 	}
 }
@@ -187,13 +176,12 @@ class Rule {
 		Object.assign(this, {
 			name,
 			msg,
-			params
+			params,
 		});
 	}
 
 	validate(field) {
-		if (this.name == 'optional')
-			return new RuleResult(true);
+		if (this.name == 'isOptional') return new RuleResult(true);
 		if (!validator[this.name](field + '', ...this.params)) {
 			return new RuleResult(false, this.msg || this.message || '参数错误');
 		}
@@ -248,7 +236,7 @@ class RuleField {
 
 	_allowEmpty() {
 		for (let rule of this.rules) {
-			if (rule.name == 'optional') {
+			if (rule.name == 'isOptional') {
 				return true;
 			}
 		}
@@ -258,16 +246,14 @@ class RuleField {
 	_hasDefault() {
 		for (let rule of this.rules) {
 			const defaultValue = rule.params[0];
-			if (rule.name == 'optional') {
+			if (rule.name == 'isOptional') {
 				return defaultValue;
 			}
 		}
 	}
 }
 
-
-
 module.exports = {
 	Rule,
-	LinValidator
+	LinValidator,
 };

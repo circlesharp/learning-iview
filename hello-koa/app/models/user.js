@@ -15,7 +15,10 @@ User.init(
 			autoIncrement: true, // 自增 也可使用 CUID
 		},
 		nickname: Sequelize.STRING,
-		email: Sequelize.STRING,
+		email: {
+			type: Sequelize.STRING(128),
+			unique: true, // 唯一
+		},
 		password: Sequelize.STRING,
 		openid: {
 			type: Sequelize.STRING(64),
@@ -28,3 +31,5 @@ User.init(
 		tableName: 'user',
 	}
 );
+
+module.exports = { User };
