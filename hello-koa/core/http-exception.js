@@ -13,6 +13,18 @@ class ParameterException extends HttpException {
 	}
 }
 
+class NotFound extends HttpException {
+	constructor(msg = '资源未找到', errorCode) {
+		super(msg, errorCode, 404);
+	}
+}
+
+class AuthFailed extends HttpException {
+	constructor(msg = '授权失败', errorCode = 10004) {
+		super(msg, errorCode, 401);
+	}
+}
+
 class Success extends HttpException {
 	constructor(msg = 'ok', errorCode = 0) {
 		// 200 查询成功  201 操作成功
@@ -23,5 +35,7 @@ class Success extends HttpException {
 module.exports = {
 	HttpException,
 	ParameterException,
+	NotFound,
+	AuthFailed,
 	Success,
 };
