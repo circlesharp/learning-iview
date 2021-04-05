@@ -1,6 +1,6 @@
-const { sequelize } = require('../../core/db');
-
+const bcrypt = require('bcryptjs');
 const { Sequelize, Model } = require('sequelize');
+const { sequelize } = require('../../core/db');
 
 class User extends Model {
 
@@ -19,7 +19,15 @@ User.init(
 			type: Sequelize.STRING(128),
 			unique: true, // 唯一
 		},
-		password: Sequelize.STRING,
+		password: {
+			// 观察者模式 Reflect
+			type: Sequelize.STRING,
+			set(val) {
+				const salt = bcrypt.genSaltSync(2);
+				const pwd = bcrypt.hashSync(val, salt);
+				this.setDataValue('password', pwd);
+			}
+		},
 		openid: {
 			type: Sequelize.STRING(64),
 			unique: true, // 唯一

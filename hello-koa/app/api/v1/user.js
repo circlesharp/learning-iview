@@ -16,7 +16,9 @@ router.post('/register', async (ctx) => {
 		nickname: v.get('body.nickname'),
 	};
 
-	User.create(user);
+	await User.create(user);
+
+	global.$success('创建用户成功', 0);
 });
 
 module.exports = router;

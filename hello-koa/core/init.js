@@ -31,6 +31,9 @@ class InitManager {
 
 	static loadHttpException() {
 		global.$errs = require(`${process.cwd()}/core/http-exception`);
+		global.$success = (msg, errorCode) => {
+			throw new global.$errs.Success(msg, errorCode);
+		};
 	}
 
 	static loadConfig(path = process.cwd()) {
