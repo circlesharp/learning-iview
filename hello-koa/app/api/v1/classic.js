@@ -1,10 +1,14 @@
 const Router = require("koa-router");
+const { Auth } = require('../../../middlewares/auth');
 
-const router = new Router();
+const router = new Router({
+	prefix: '/v1/classic',
+});
 
-router.get('/v1/classic/latest', (ctx, next) => {
+router.get('/latest', new Auth(global.$scope.VISIT).m, (ctx, next) => {
 	ctx.body = {
-		key: 'classic'
+		key: 'classic',
+		auth: ctx.auth,
 	};
 });
 

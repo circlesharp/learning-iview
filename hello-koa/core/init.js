@@ -1,5 +1,6 @@
 const Router = require('koa-router');
 const requireDirector = require('require-directory');
+const { AuthScope } = require('../app/lib/enum');
 
 class InitManager {
 	static initCore(app) {
@@ -10,6 +11,9 @@ class InitManager {
 
 		// 将自定义异常挂到 global
 		InitManager.loadHttpException();
+
+		// 将权限配置挂到 global
+		InitManager.loadAuthScope();
 
 		// 自动引入 api 的 router
 		InitManager.initLoadRouters();
@@ -40,6 +44,10 @@ class InitManager {
 		const configPath = `${path}/config/config.js`;
 		const config = require(configPath);
 		global.$config = config;
+	}
+
+	static loadAuthScope() {
+		global.$scope = AuthScope;
 	}
 }
 

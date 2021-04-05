@@ -6,6 +6,14 @@ const LoginType = {
 	isThisType,
 };
 
+const AuthScope = {
+	VISITOR: 4,
+	USER: 8,
+	ADMIN: 16,
+	SUPER_ADMIN: 32,
+	isThisType,
+};
+
 function isThisType(val) {
 	for (const key in this) {
 		if (this[key] == val) {
@@ -17,4 +25,5 @@ function isThisType(val) {
 
 module.exports = {
 	LoginType,
+	AuthScope,
 };

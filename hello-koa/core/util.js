@@ -41,14 +41,12 @@ const findMembers = function (instance, {
 
 // 利用jsonwebtoken 生成jwt令牌
 const generateToken = function (uid, scope) {
-	const secretKey = global.config.security.secretKey;
-	const expiresIn = global.config.security.expiresIn;
-	const token = jwt.sign({
-		uid,
-		scope
-	}, secretKey, {
-		expiresIn: expiresIn
-	});
+	const { secretKey, expiresIn } = global.$config.security;
+	const payload = { uid, scope };
+	const options = { expiresIn };
+	// token 可以写入一些信息, 有时效性
+	const token = jwt.sign(payload, secretKey, options);
+
 	return token;
 };
 

@@ -8,4 +8,9 @@ module.exports = {
 		user: 'trz',
 		password: '123',
 	},
+	security: {
+		secretKey: 'I_am_a_f**king_secret_key',
+		expiresIn: 60 * 60 * 24 * 31, // 1个月
+		// expiresIn: 10, // 10秒
+	},
 };
