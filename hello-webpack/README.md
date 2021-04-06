@@ -12,3 +12,8 @@
 1. npx webpack --config webpack.config.js
 2. If a webpack.config.js is present, the webpack command picks it up by default.
 3. This will be useful for more complex configurations that need to be split into multiple files.
+
+## 4-Asset Management
+1. loading css: style-loader, css-loader
+2. loading pic: built-in Asset Modules
+3. ...
