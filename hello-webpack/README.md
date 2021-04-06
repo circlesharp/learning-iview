@@ -7,3 +7,8 @@
 
 ## 2-Creating a Bundle
 1. npx webpack
+
+## 3-Using a Configuration
+1. npx webpack --config webpack.config.js
+2. If a webpack.config.js is present, the webpack command picks it up by default.
+3. This will be useful for more complex configurations that need to be split into multiple files.
