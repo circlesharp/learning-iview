@@ -24,4 +24,8 @@
 3. cleaning up the /dist folder
 
 ## 6-Development
-
+1. mode, devtool (source map)
+2. Development Tool
+  1. watch mode: automatically recompiles the changed module
+  2. webpack-dev-server: keeps bundle files in memory and serves them as if they were real files mounted at the server's root path.
+  3. webpack-dev-middleware: is a wrapper that will emit files processed by webpack to a server.
