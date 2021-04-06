@@ -17,3 +17,8 @@
 1. loading css: style-loader, css-loader
 2. loading pic: built-in Asset Modules
 3. ...
+
+## 5-Output Management
+1. 配置多个 entry
+2. html-webpack-plugin by default will generate its own index.html file, even though we already have one in the dist/ folder.
+3. cleaning up the /dist folder
