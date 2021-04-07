@@ -6,13 +6,11 @@ module.exports = {
 	devtool: 'inline-source-map',
 	entry: {
 		index: './src/index.js',
-		printer: './src/print.js',
 	},
 	output: {
 		filename: '[name].bundle.js',
 		path: path.resolve(__dirname, 'dist'),
 		clean: true,
-		publicPath: '/',
 	},
 	plugins: [
 		new HtmlWebpackPlugin({ title: 'Development' }),

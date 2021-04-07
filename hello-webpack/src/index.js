@@ -1,7 +1,8 @@
-import _ from 'lodash';
 import printMe from './print';
 
-function component() {
+async function getComponent() {
+	const { default: _ } = await import('lodash');
+
 	const element = document.createElement('div');
 	const btn = document.createElement('button');
 
@@ -14,4 +15,6 @@ function component() {
 	return element;
 }
 
-document.body.appendChild(component());
+getComponent().then(component => {
+	document.body.appendChild(component);
+});

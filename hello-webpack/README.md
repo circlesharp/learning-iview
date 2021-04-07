@@ -29,3 +29,14 @@
   1. watch mode: automatically recompiles the changed module
   2. webpack-dev-server: keeps bundle files in memory and serves them as if they were real files mounted at the server's root path.
   3. webpack-dev-middleware: is a wrapper that will emit files processed by webpack to a server.
+
+## 7-Code Splitting
+1. This feature allows you to split your code into various bundles which can then be loaded on demand or in parallel.
+2. there are three general approaches:
+  1. Entry Points:
+    1. If there are any duplicated modules between entry chunks they will be included in both bundles.
+    2. It isn't as flexible and can't be used to dynamically split code with the core application logic.
+  2. Prevent Duplication:
+    1. Entry dependencies
+    2. SplitChunksPlugin
+  3. Dynamic Imports
