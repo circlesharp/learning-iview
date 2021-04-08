@@ -56,7 +56,7 @@ class TokenValidator extends LinValidator {
 	constructor() {
 		super();
 		this.account = [
-			new Rule('isLength', '不符合账号规则', { min: 3, max: 18 }),
+			new Rule('isLength', '不符合账号规则', { min: 3, max: 108 }),
 		];
 		this.secret = [
 			// 可以为空，因为登录多元化
@@ -77,8 +77,18 @@ class TokenValidator extends LinValidator {
 	}
 }
 
+class NotEmptyValidator extends LinValidator {
+	constructor() {
+		super();
+		this.token = [
+			new Rule('isLength', '不允许为空', { min: 1 })
+		];
+	}
+}
+
 module.exports = {
 	PositiveIntergerValidator,
 	RegisterValidator,
 	TokenValidator,
+	NotEmptyValidator,
 };

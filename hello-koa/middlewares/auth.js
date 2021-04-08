@@ -47,6 +47,16 @@ class Auth {
 			await next();
 		};
 	}
+
+	static verifyToken(token) {
+		try {
+			const { secretKey } = global.$config.security;
+			jwt.verify(token, secretKey);
+			return true;
+		} catch (err) {
+			return false;
+		}
+	}
 }
 
 module.exports = {

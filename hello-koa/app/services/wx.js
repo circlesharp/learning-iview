@@ -14,7 +14,7 @@ class WXManager {
 		}
 
 		const { errcode, errmsg, openid } = result.data;
-		if (errcode !== 0) {
+		if (errcode) {
 			throw new global.$errs.AuthFailed(`openid 获取失败: ${errcode}, ${errmsg}`);
 		}
 
