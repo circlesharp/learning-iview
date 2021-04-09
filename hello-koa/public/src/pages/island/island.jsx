@@ -2,7 +2,7 @@ import Taro from '@tarojs/taro';
 import { Component } from 'react';
 import { View, Button } from '@tarojs/components';
 import { observer, inject } from 'mobx-react';
-import { request } from '../../utils/vanillaWX';
+import request from '../../utils/request';
 
 import './island.styl';
 
@@ -18,14 +18,13 @@ class Login extends Component {
 				}
 
 				const url = 'http://localhost:3002/v1/token';
-				const method = 'POST';
 				const data = {
 					account: code,
 					type: 100,
 				};
 
 				try {
-					const { token } = await request(method, url, data);
+					const { token } = await request.post({ url, data });
 					Taro.setStorageSync('token', token);
 				} catch (err) {
 					console.log(err);
