@@ -36,9 +36,20 @@ class Login extends Component {
 	handleVerifyToken = async () => {
 		try {
 			const url = 'http://localhost:3002/v1/token/verify';
-			const token = Taro.getStorageSync('token');
-			const rst = await request('post', url, { token });
-			console.log(rst?.result);
+			const data = { token: Taro.getStorageSync('token') };
+			const rst = await request.post({ url, data });
+			const toastTitle = rst?.result ? 'success' : 'fail';
+			Taro.showToast({ title: toastTitle });
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	getClassicLatest = async () => {
+		try {
+			const url = 'http://localhost:3002/v1/classic/latest';
+			const res = await request.get({ url, data: {} });
+			console.log(res);
 		} catch (error) {
 			console.log(error);
 		}
@@ -50,6 +61,7 @@ class Login extends Component {
 				island api test
 				<Button onClick={this.handleGetToken}>获取 token</Button>
 				<Button onClick={this.handleVerifyToken}>验证 token</Button>
+				<Button onClick={this.getClassicLatest}>获取最新期刊</Button>
 			</View>
 		);
 	}
