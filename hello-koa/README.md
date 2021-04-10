@@ -7,6 +7,7 @@
 3. show tables;
 4. select <...fields> from <tableName> where <expression>;
 5. drop table <tableName>;
+6. source <sqlScript>;
 
 
 ## 数据库模型对象的基本操作命令
