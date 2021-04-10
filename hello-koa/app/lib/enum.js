@@ -14,6 +14,14 @@ const AuthScope = {
 	isThisType,
 };
 
+const ArtType = {
+	MOVIE: 100,
+	MUSIC: 200,
+	SENTENCE: 300,
+	BOOK: 400,
+	isThisType,
+};
+
 function isThisType(val) {
 	for (const key in this) {
 		if (this[key] == val) {
@@ -26,4 +34,5 @@ function isThisType(val) {
 module.exports = {
 	LoginType,
 	AuthScope,
+	ArtType,
 };
