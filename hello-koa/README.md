@@ -15,3 +15,11 @@
 
 1. mod.create
 2. mod.findOne
+3. mod.increment
+
+
+## 严谨的数据库 ACID
+1. 原子性
+2. 一致性
+3. 隔离性
+4. 持久性

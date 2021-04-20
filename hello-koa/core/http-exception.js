@@ -38,6 +38,18 @@ class Success extends HttpException {
 	}
 }
 
+class LikeError extends HttpException {
+	constructor(msg = '您已点赞', errorCode = 60001) {
+		super(msg, errorCode, 400);
+	}
+}
+
+class DislikeError extends HttpException {
+	constructor(msg = '您已取消点赞', errorCode = 60002) {
+		super(msg, errorCode, 400);
+	}
+}
+
 module.exports = {
 	HttpException,
 	ParameterException,
@@ -45,4 +57,6 @@ module.exports = {
 	AuthFailed,
 	Forbbiden,
 	Success,
+	LikeError,
+	DislikeError,
 };

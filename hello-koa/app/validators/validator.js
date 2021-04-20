@@ -13,6 +13,13 @@ class PositiveIntergerValidator extends LinValidator {
 	}
 }
 
+class LikeValidator extends PositiveIntergerValidator {
+	constructor() {
+		super();
+		this.validateType = checkType;
+	}
+}
+
 class RegisterValidator extends LinValidator {
 	// 校验类型1 属性校验
 	constructor() {
@@ -63,17 +70,8 @@ class TokenValidator extends LinValidator {
 			new Rule('isOptional'),
 			new Rule('isLength', '6 ~ 18 个字符', { min: 6, max: 18 }),
 		];
-	}
 
-	validateLoginType(vals) {
-		const { type } = vals.body;
-		if (!type) {
-			throw new Error('type 是必须参数');
-		}
-
-		if (!LoginType.isThisType(type)) {
-			throw new Error('type 参数不合法');
-		}
+		this.validateLoginType = checkType;
 	}
 }
 
@@ -86,8 +84,20 @@ class NotEmptyValidator extends LinValidator {
 	}
 }
 
+function checkType(vals) {
+	const { type } = vals.body;
+	if (!type) {
+		throw new Error('type 是必须参数');
+	}
+
+	if (!LoginType.isThisType(type)) {
+		throw new Error('type 参数不合法');
+	}
+}
+
 module.exports = {
 	PositiveIntergerValidator,
+	LikeValidator,
 	RegisterValidator,
 	TokenValidator,
 	NotEmptyValidator,
