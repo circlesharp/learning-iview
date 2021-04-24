@@ -21,13 +21,24 @@ const sequelize = new Sequelize(dbName, user, password, {
 
 		// 驼峰 -> 下划线
 		underscored: true,
-		// createAt: 'create_at',
-		// updateAt: 'update_at',
+		// createdAt: 'created_at',
+		// updatedAt: 'updated_at',
 		// deletedAt: 'deleted_at',
+
+		// scopes
+		scopes: {
+			noDate: {
+				attributes: {
+					exclude: ['createdAt', 'updatedAt', 'deletedAt'],
+				},
+			},
+		},
 	},
 });
 
 // 自动将模型创建到数据库 千万不要将 force 设置为 true
-sequelize.sync();
+sequelize.sync({
+	force: false,
+});
 
 module.exports = { sequelize };

@@ -2,7 +2,7 @@ const basicAuth = require('basic-auth');
 const jwt = require('jsonwebtoken');
 
 class Auth {
-	constructor(level) {
+	constructor(level = global.$scope.USER) {
 		// 从配置文件中读出权限并设置
 		const AuthScope = global.$scope;
 		for (const scope in AuthScope) {

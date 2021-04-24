@@ -2,19 +2,20 @@ const { ArtType } = require('../lib/enum');
 const { Movie, Music, Sentence } = require('./classic');
 
 class Art {
-	static async getData(artId, type) {
-		let art = null;
+	static async getData(artId, type, useScope = true) {
+		let art;
 		const finder = { where: { id: artId } };
+		const scope = useScope ? 'noDate' : null;
 
 		switch (type) {
 			case ArtType.MOVIE:
-				art = await Movie.findOne(finder);
+				art = await Movie.scope(scope).findOne(finder);
 				break;
 			case ArtType.MUSIC:
-				art = await Music.findOne(finder);
+				art = await Music.scope(scope).findOne(finder);
 				break;
 			case ArtType.SENTENCE:
-				art = await Sentence.findOne(finder);
+				art = await Sentence.scope(scope).findOne(finder);
 				break;
 			case ArtType.BOOK:
 				break;

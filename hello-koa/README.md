@@ -20,6 +20,7 @@
 3. Mod.findOne
 4. mod.increment
 5. mod.decrement
+6. Mod.scope(scopeKey)
 
 
 ## 严谨的数据库 ACID
