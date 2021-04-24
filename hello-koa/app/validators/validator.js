@@ -3,7 +3,7 @@ const { User } = require('../models/user');
 const { LoginType } = require('../lib/enum');
 
 // 校验 正整数
-class PositiveIntergerValidator extends LinValidator {
+class PositiveIntegerValidator extends LinValidator {
 	constructor() {
 		super();
 		this.id = [
@@ -13,7 +13,7 @@ class PositiveIntergerValidator extends LinValidator {
 	}
 }
 
-class LikeValidator extends PositiveIntergerValidator {
+class LikeValidator extends PositiveIntegerValidator {
 	constructor() {
 		super();
 		this.validateType = checkType;
@@ -96,7 +96,7 @@ function checkType(vals) {
 }
 
 module.exports = {
-	PositiveIntergerValidator,
+	PositiveIntegerValidator,
 	LikeValidator,
 	RegisterValidator,
 	TokenValidator,

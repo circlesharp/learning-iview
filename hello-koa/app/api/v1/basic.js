@@ -1,5 +1,5 @@
 const Router = require("koa-router");
-const { PositiveIntergerValidator } = require('../../validators/validator');
+const { PositiveIntegerValidator } = require('../../validators/validator');
 
 const router = new Router();
 
@@ -27,7 +27,7 @@ const getAllParamsByValidator = v => {
 };
 
 router.post('/v1/:id/basic', async (ctx, next) => {
-	const v = new PositiveIntergerValidator();
+	const v = new PositiveIntegerValidator();
 	await v.validate(ctx);
 	v.get('path.id');
 
