@@ -23,7 +23,7 @@ class Auth {
 			let decode; // jwt 在验证 token 后的信息
 
 			if (!userToken || !userToken.name) {
-				throw new global.$errs.Forbbiden(errMsg);
+				throw new global.$errs.Forbidden(errMsg);
 			}
 
 			try {
@@ -33,7 +33,7 @@ class Auth {
 				if (err.name === 'TokenExpiredError') {
 					errMsg = 'token 已过期';
 				}
-				throw new global.$errs.Forbbiden(errMsg);
+				throw new global.$errs.Forbidden(errMsg);
 			}
 
 			const { uid, scope } = decode;
@@ -41,7 +41,7 @@ class Auth {
 
 			if (scope < this.level) {
 				errMsg = '权限不足';
-				throw new global.$errs.Forbbiden(errMsg);
+				throw new global.$errs.Forbidden(errMsg);
 			}
 
 			await next();

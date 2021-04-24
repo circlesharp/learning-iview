@@ -13,9 +13,13 @@
 
 ## 数据库模型对象的基本操作命令
 
-1. mod.create
-2. mod.findOne
-3. mod.increment
+>> 大小代表一张表，小写代表一条记录
+
+1. Mod.create
+2. mod.destroy
+3. Mod.findOne
+4. mod.increment
+5. mod.decrement
 
 
 ## 严谨的数据库 ACID

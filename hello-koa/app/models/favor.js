@@ -11,20 +11,35 @@ class Favor extends Model {
 			throw new global.$errs.LikeError();
 		}
 
-		/* 事务 */
-		sequelize.transaction(async transaction => {
+		/* 点赞事务 */
+		return sequelize.transaction(async transaction => {
 			/* 任务 1: Favor 表增加记录 */
 			await Favor.create({ artId, type, uid }, { transaction });
 
 			/* 任务 2: 在 Classic 表中 favNums 字段加一 */
 			const art = await Art.getData(artId, type);
-			art.increment('favNums', { by: 1, transaction });
+			await art.increment('favNums', { by: 1, transaction });
 		});
 	}
 
-	// static async dislike(artId, type, uid) {
-	// 	//
-	// }
+	static async dislike(artId, type, uid) {
+		const favor = await Favor.findOne({
+			where: { artId, type, uid }
+		});
+		if (!favor) {
+			throw new global.$errs.DislikeError();
+		}
+
+		/* 取消点赞事务 */
+		return sequelize.transaction(async transaction => {
+			/* 任务 1: Favor 表删除记录 (force 标记是否硬删除) */
+			await favor.destroy({ force: true, transaction });
+
+			/* 任务 2: 在 Classic 表中 favNums 字段减一 */
+			const art = await Art.getData(artId, type);
+			await art.decrement('favNums', { by: 1, transaction });
+		});
+	}
 }
 
 Favor.init(

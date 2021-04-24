@@ -5,15 +5,28 @@ const { LikeValidator } = require("../../validators/validator");
 
 const router = new Router({ prefix: '/v1/like' });
 
-router.post('/', new Auth(global.$scope.USER).m, async ctx => {
+router.post('/', new Auth(global.$scope.USER).m, async (ctx) => {
 	const v = new LikeValidator();
-	await v.validate(ctx);
+	await v.validate(ctx, { id: 'artId' });
 
 	const artId = v.get('body.artId');
 	const type = v.get('body.type');
 	const uid = ctx.auth.uid;
 
 	await Favor.like(artId, type, uid);
+
+	global.$success();
+});
+
+router.post('/cancel', new Auth(global.$scope.USER).m, async (ctx) => {
+	const v = new LikeValidator();
+	await v.validate(ctx, { id: 'artId' });
+
+	const artId = v.get('body.artId');
+	const type = v.get('body.type');
+	const uid = ctx.auth.uid;
+
+	await Favor.dislike(artId, type, uid);
 
 	global.$success();
 });
