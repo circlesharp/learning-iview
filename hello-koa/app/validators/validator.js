@@ -1,6 +1,6 @@
 const { LinValidator, Rule } = require(`../../core/lin-validator`);
 const { User } = require('../models/user');
-const { LoginType } = require('../lib/enum');
+const { LoginType, ArtType } = require('../lib/enum');
 
 // 校验 正整数
 class PositiveIntegerValidator extends LinValidator {
@@ -16,7 +16,14 @@ class PositiveIntegerValidator extends LinValidator {
 class LikeValidator extends PositiveIntegerValidator {
 	constructor() {
 		super();
-		this.validateType = checkType;
+		this.validateType = checkType(ArtType, 'body');
+	}
+}
+
+class ClassicValidator extends PositiveIntegerValidator {
+	constructor() {
+		super();
+		this.validateType = checkType(ArtType, 'path');
 	}
 }
 
@@ -71,7 +78,7 @@ class TokenValidator extends LinValidator {
 			new Rule('isLength', '6 ~ 18 个字符', { min: 6, max: 18 }),
 		];
 
-		this.validateLoginType = checkType;
+		this.validateLoginType = checkType(LoginType, 'body');
 	}
 }
 
@@ -84,20 +91,28 @@ class NotEmptyValidator extends LinValidator {
 	}
 }
 
-function checkType(vals) {
-	const { type } = vals.body;
-	if (!type) {
-		throw new Error('type 是必须参数');
-	}
+/**
+ * 返回 validator 函数
+ * @param {} enumsType LoginType | ArtType
+ * @param {string} props 'body' | 'path'
+ */
+function checkType(enumsType = LoginType, props = 'body') {
+	return function _checkType(vals) {
+		const { type } = vals[props];
+		if (!type) {
+			throw new Error('type 是必须参数');
+		}
 
-	if (!LoginType.isThisType(type)) {
-		throw new Error('type 参数不合法');
-	}
+		if (!enumsType.isThisType(type)) {
+			throw new Error('type 参数不合法');
+		}
+	};
 }
 
 module.exports = {
 	PositiveIntegerValidator,
 	LikeValidator,
+	ClassicValidator,
 	RegisterValidator,
 	TokenValidator,
 	NotEmptyValidator,

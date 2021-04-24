@@ -2,7 +2,7 @@ const Router = require("koa-router");
 const { Auth } = require('../../../middlewares/auth');
 const { Flow } = require('../../models/flow');
 const { Art } = require('../../models/art');
-const { PositiveIntegerValidator } = require("../../validators/validator");
+const { PositiveIntegerValidator, ClassicValidator } = require("../../validators/validator");
 const { Favor } = require("../../models/favor");
 
 const router = new Router({
@@ -27,7 +27,7 @@ router.get('/latest', async (ctx) => {
 /**
  * 查询下一期刊数据
  */
-router.get('/:index/next', new Auth(global.$scope.USER).m, async ctx => {
+router.get('/:index/next', new Auth().m, async ctx => {
 	const v = new PositiveIntegerValidator();
 	await v.validate(ctx, { id: 'index' });
 
@@ -51,7 +51,7 @@ router.get('/:index/next', new Auth(global.$scope.USER).m, async ctx => {
 /**
  * 查询上一期刊数据
  */
-router.get('/:index/previous', new Auth(global.$scope.USER).m, async ctx => {
+router.get('/:index/previous', new Auth().m, async ctx => {
 	const v = new PositiveIntegerValidator();
 	await v.validate(ctx, { id: 'index' });
 
@@ -70,6 +70,28 @@ router.get('/:index/previous', new Auth(global.$scope.USER).m, async ctx => {
 	art.setDataValue('likeStatus', likeStatus);
 
 	ctx.body = art;
+});
+
+/**
+ * 获取点赞信息
+ */
+router.get('/:type/:id/favor', new Auth().m, async ctx => {
+	const v = new ClassicValidator();
+	await v.validate(ctx);
+
+	const id = +v.get('path.id');
+	const type = +v.get('path.type');
+
+	const art = await Art.getData(id, type);
+	if (!art) {
+		throw new global.$errs.NotFound();
+	}
+	const likeStatus = await Favor.userLikeIt(id, type, ctx.auth.uid);
+
+	ctx.body = {
+		favNums: art.favNums,
+		likeStatus,
+	};
 });
 
 module.exports = router;
