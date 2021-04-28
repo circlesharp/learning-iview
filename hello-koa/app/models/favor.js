@@ -1,5 +1,6 @@
-const { Sequelize, Model } = require('sequelize');
+const { Sequelize, Model, Op } = require('sequelize');
 const { sequelize } = require('../../core/db');
+const { ArtType } = require('../lib/enum');
 const { Art } = require('./art');
 
 class Favor extends Model {
@@ -47,6 +48,26 @@ class Favor extends Model {
 		});
 
 		return !!favor;
+	}
+
+	static async getMyClassicFavors(uid) {
+		const artInfos = await Favor.findAll({
+			where: {
+				uid,
+				type: {
+					[Op.not]: ArtType.BOOK,
+				},
+			}
+		});
+
+		if (!artInfos.length) {
+			throw new global.$errs.NotFound();
+		}
+
+		/* 切忌：循环查询数据库 */
+		const arts = await Art.getList(artInfos);
+
+		return arts;
 	}
 }
 

@@ -94,4 +94,28 @@ router.get('/:type/:id/favor', new Auth().m, async ctx => {
 	};
 });
 
+/* 获取我喜欢的期刊 */
+router.get('/favor', new Auth().m, async ctx => {
+	const arts = await Favor.getMyClassicFavors(ctx.auth.uid);
+
+	ctx.body = arts;
+});
+
+/* 获取期刊信息 */
+router.get('/:type/:id', new Auth().m, async ctx => {
+	const v = new ClassicValidator();
+	await v.validate(ctx);
+
+	const id = +v.get('path.id');
+	const type = +v.get('path.type');
+
+	const art = await Art.getData(id, type);
+	if (!art) {
+		throw new global.$errs.NotFound();
+	}
+	const likeStatus = await Favor.userLikeIt(id, type, ctx.auth.uid);
+
+	ctx.body = { art, likeStatus };
+});
+
 module.exports = router;
